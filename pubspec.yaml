@@ -1,0 +1,36 @@
+name: or_en_pepite
+description: A new Flutter project.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.19.2 <3.0.0'
+
+dependencies:
+  auto_route: ^5.0.4
+  bloc: ^8.1.1
+  cupertino_icons: ^1.0.2
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^8.1.2
+  flutter_signin_button: ^2.0.0
+  fluttertoast: ^8.1.3
+  font_awesome_flutter: ^10.4.0
+  google_fonts: ^4.0.3
+  shared_preferences: ^2.0.17
+
+dev_dependencies:
+  auto_route_generator: ^5.0.3
+  build_runner: ^2.3.3
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/logos/google_light.png
+    - assets/logos/google_dark.png
+    - assets/logos/facebook_new.png
+    - assets/logos/2.0x/
+    - assets/logos/3.0x/
