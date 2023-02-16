@@ -1,0 +1,33 @@
+{
+  "downloads": {
+    "podcasts": [{}],
+    "videos": [{}, {}]
+  },
+  "favorites": {
+    "videos": [
+      {
+        "id": "sPNWQzHHm88",
+        "title": "Zaga",
+        "author": "",
+        "local_path": "",
+        "description": ""
+      }
+    ],
+    "podcasts": [
+      {
+        "id": "sPNWQzHHm88",
+        "title": "Zaga",
+        "author": "",
+        "local_path": "",
+        "description": ""
+      }
+    ],
+    "newsletters": []
+  },
+  "history": [
+    {
+      "type": ["videos", "podcast"],
+      "res": ["video_id", "podcast_link"]
+    }
+  ]
+}

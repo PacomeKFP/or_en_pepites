@@ -1,11 +1,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.or_en_pepite">
-   <uses-permission android:name="android.permission.INTERNET" />
+   <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION"/>
+
+    <uses-permission android:name="android.permission"/>
    <application
         android:label="Or en Pépite"
         android:name="Or en Pépite"
         android:icon="@mipmap/ic_launcher">
         <activity
+        android:requestLegacyExternalStorage="true"
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop"

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/models/models.dart';
-import 'components/Email.dart';
+import 'Components/Email.dart';
 
-import 'components/Socials.dart';
+import 'Components/Socials.dart';
 
 class AuthenticationPage extends StatelessWidget {
   const AuthenticationPage({super.key});
@@ -18,7 +17,6 @@ class AuthenticationPage extends StatelessWidget {
     ];
     return SafeArea(
       child: Scaffold(
-          appBar: AppBar(title: Center(child: Text(AppStrings.appName))),
           body: Container(
             padding: const EdgeInsets.only(
               left: 30,

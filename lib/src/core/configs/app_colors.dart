@@ -34,7 +34,7 @@ class AppColors {
         degradedPrimary = const Color(0xE8D5C7A5),
         onPrimary = const Color(0xFFFCF5F5),
         error = const Color(0xFFD54300),
-        onError = const Color(0xFFFBFAF5),
+        onError = const Color(0xFFFBFAF5), 
         gold = const Color(0xFF886407);
 
   //App Colors

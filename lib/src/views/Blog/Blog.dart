@@ -1,14 +1,14 @@
 import 'package:auto_route/auto_route.dart';
-import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/utils/functions.dart';
-import 'package:or_en_pepite/src/views/Components/AppBar.dart';
-import 'package:or_en_pepite/src/views/Components/Drawer.dart';
 
+import '../Components/AppBar.dart';
 import '../Components/BottomNavigationBar.dart';
+import '../Components/Drawer.dart';
 
-class UserHomePage extends StatelessWidget {
-  const UserHomePage({super.key});
+class NewsLettersPage extends StatelessWidget {
+  const NewsLettersPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +17,11 @@ class UserHomePage extends StatelessWidget {
       appBar: appBarComponent(context, getRouteName(context.topRoute.name)),
       endDrawer: const DrawerComponent(),
       bottomNavigationBar: const AppNavigation(
-        currentIndex: 0,
+        currentIndex: 3,
       ),
       body: Container(
-        width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(
             horizontal: Dimens.padding, vertical: Dimens.doublePadding),
         child: SingleChildScrollView(
@@ -31,20 +31,14 @@ class UserHomePage extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(vertical: Dimens.oneHalfPadding),
                 child: Text(
-                  'Bienvenue',
+                  'NewsLetters',
                   style: Theme.of(context)
                       .textTheme
                       .headlineLarge!
                       .copyWith(color: AppColors.light().gold),
                 ),
               ),
-              Text(
-                AppTexts.welcome,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Colors.black87),
-              )
+              Text(AppTexts.newsletter1)
             ],
           ),
         ),

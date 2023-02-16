@@ -21,16 +21,16 @@ enum SocialButtons {
           : this == github
               ? 'Github'
               : 'Twitter';
-  Function get loginMethod => () => print('Sign with $label');
+  Function() get loginMethod => () => debugPrint('Sign with $label');
 
-  String get image_name => this == google
+  String get imageName => this == google
       ? 'google_light.png'
       : this == googleDark
           ? 'google_dark.png'
           : 'facebook_new.png';
   Widget get icon => [google, googleDark].contains(this)
       ? Image.asset(
-          'logos/$image_name',
+          'logos/$imageName',
           width: 84,
         )
       : const Icon(

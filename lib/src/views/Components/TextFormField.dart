@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/models/models.dart';
 
 class CustomTextField extends StatefulWidget {
@@ -7,11 +6,11 @@ class CustomTextField extends StatefulWidget {
   final IconData? icon;
   final String placedholder;
   final bool isObscurable;
-  final TextEditingController controller;
+  TextEditingController controller;
   final bool isRequired;
   final List<FormValidators>? validators;
-  const CustomTextField(
-      {this.label = "",
+   CustomTextField(
+      {super.key, this.label = "",
       this.placedholder = "",
       this.isObscurable = false,
       required this.controller,
@@ -25,11 +24,17 @@ class CustomTextField extends StatefulWidget {
 
 class _CustomTextFieldState extends State<CustomTextField> {
   bool _obscured = false;
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.isObscurable) _obscured = true;
+  }
 
   @override
   Widget build(BuildContext context) {
     ColorScheme colors = Theme.of(context).colorScheme;
-    if (widget.isObscurable) _obscured = true;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
       child: TextFormField(
@@ -39,7 +44,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           List<FormValidators> validators = [(v) => v == null || v.isEmpty];
           validators.addAll(widget.validators ?? []);
           for (FormValidators validator in validators) {
-            if (!validator(value) || value == null || value.isEmpty) {
+            if (validator(widget.controller.text)) {
               isValid = false;
               break;
             }

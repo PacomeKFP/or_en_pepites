@@ -1,6 +1,5 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/models/models.dart';
 import 'package:or_en_pepite/src/views/Components/TextFormField.dart';
@@ -39,7 +38,7 @@ class _EmailPasswordStateAuth extends State<EmailPasswordAuth> {
               if (widget.authType == AuthType.register)
                 CustomTextField(
                   controller: controllers['full_name']!,
-                  icon: Icons.mail_outline_rounded,
+                  icon: Icons.account_circle_outlined,
                   label: 'Nom complet',
                   placedholder: 'Entrer votre nom ...',
                 ),
@@ -47,20 +46,30 @@ class _EmailPasswordStateAuth extends State<EmailPasswordAuth> {
                 controller: controllers['email']!,
                 icon: Icons.mail_outline_rounded,
                 label: 'Email',
-                validators: [(v) => EmailValidator.isValidEmail(v)],
+                validators: [(v) => !EmailValidator.isValidEmail(v)],
                 placedholder: 'Entrer votre email ...',
               ),
               CustomTextField(
                 controller: controllers['password']!,
-                icon: Icons.mail_outline_rounded,
+                icon: Icons.key_sharp,
                 label: 'Mot de passe',
+                validators: [
+                  (v) =>
+                      controllers['password_confirm']!.text !=
+                      controllers['password']!.text
+                ],
                 placedholder: 'Entrer votre mot de passe ...',
                 isObscurable: true,
               ),
               if (widget.authType == AuthType.register)
                 CustomTextField(
                   controller: controllers['password_confirm']!,
-                  icon: Icons.mail_outline_rounded,
+                  icon: Icons.key_rounded,
+                  validators: [
+                  (v) =>
+                      controllers['password_confirm']!.text !=
+                      controllers['password']!.text
+                ],
                   label: 'Confirmez votre mot de passe',
                   placedholder: 'Entrer votre mot de passe à nouveau...',
                   isObscurable: true,
@@ -90,6 +99,7 @@ class _EmailPasswordStateAuth extends State<EmailPasswordAuth> {
                   if (_formKey.currentState!.validate()) {
                     ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Processing Data')));
+                    context.router.pushNamed('/');
                   }
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('cancelled')),

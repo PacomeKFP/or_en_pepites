@@ -1,28 +1,29 @@
 part of core.configs;
 
 class AppTheme {
-  static ThemeData _buildTheme({required Brightness brightness, required AppColors colors}) {
-    
+  static ThemeData _buildTheme(
+      {required Brightness brightness, required AppColors colors}) {
     var baseTheme = _buildTextTheme(colors: colors);
     return ThemeData(
-      
       brightness: brightness,
       scaffoldBackgroundColor: colors.background,
       textTheme: GoogleFonts.poppinsTextTheme(baseTheme),
       appBarTheme: AppBarTheme(
         elevation: 0,
-        toolbarHeight: 0,
+        // toolbarHeight: 0,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
-          statusBarIconBrightness: brightness == Brightness.light ? Brightness.dark : Brightness.light,
+          statusBarIconBrightness: brightness == Brightness.light
+              ? Brightness.dark
+              : Brightness.light,
         ),
         backgroundColor: Colors.transparent,
       ),
       drawerTheme: DrawerThemeData(backgroundColor: colors.background),
       cardColor: colors.background,
-      bottomSheetTheme: BottomSheetThemeData(backgroundColor: colors.background),
+      bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.white70),
       dialogTheme: DialogTheme(backgroundColor: colors.background),
-      primaryColor: colors.primary,
+      primaryColor: Colors.white,
       colorScheme: ColorScheme(
         background: colors.background,
         onBackground: colors.onBackground,
@@ -44,8 +45,6 @@ class AppTheme {
     return const TextTheme();
   }
 
-  
-
   static final ThemeData lightTheme = _buildTheme(
     brightness: Brightness.light,
     colors: AppColors.light(),
@@ -56,4 +55,3 @@ class AppTheme {
     colors: AppColors.dark(),
   );
 }
-

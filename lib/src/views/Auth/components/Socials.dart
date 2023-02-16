@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:or_en_pepite/src/models/models.dart';
 
@@ -10,7 +11,10 @@ class SocialLoginButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: InkWell(
-        onTap: button.loginMethod(),
+        onTap: () {
+          context.router.pushNamed('/');
+          button.loginMethod;
+        },
         child: Container(
           width: double.infinity,
           height: 60,
