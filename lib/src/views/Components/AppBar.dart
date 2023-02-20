@@ -21,7 +21,7 @@ PreferredSizeWidget appBarComponent(context, name) => AppBar(
         name,
         style: Theme.of(context)
             .textTheme
-            .titleLarge!
+            .titleMedium!
             .copyWith(color: Theme.of(context).colorScheme.onSurface),
       ),
       leading: AutoLeadingButton(

@@ -14,7 +14,7 @@ class DownloadsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: appBarComponent(context, getRouteName(context.topRoute.name)),
+      appBar: appBarComponent(context, "Téléchargements"),
       endDrawer: const DrawerComponent(),
       bottomNavigationBar: const AppNavigation(
         currentIndex: 4,

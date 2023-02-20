@@ -8,9 +8,12 @@
 
     <uses-permission android:name="android.permission"/>
    <application
-        android:label="Or en Pépite"
-        android:name="Or en Pépite"
+        android:label="Or en Pépites"
+        android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver"
+              android:exported="true">   
+    </receiver> 
         <activity
         android:requestLegacyExternalStorage="true"
             android:name=".MainActivity"

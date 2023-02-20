@@ -17,43 +17,70 @@ class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    Authentification.name: (routeData) {
+    AuthenticationRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const AuthenticationPage(),
       );
     },
-    Accueil.name: (routeData) {
+    UserHomeRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const UserHomePage(),
       );
     },
-    Telechargements.name: (routeData) {
+    DownloadsRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const DownloadsPage(),
       );
     },
-    Talents_pepites.name: (routeData) {
+    PodcastsListRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const PodcastPage(),
+        child: const PodcastsListPage(),
       );
     },
-    Information_pepites.name: (routeData) {
+    PodcastDetailsRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const VideoPage(),
+        child: const PodcastDetailsPage(),
       );
     },
-    Concepts_pepites.name: (routeData) {
+    VideosListRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const NewsLettersPage(),
+        child: const VideosListPage(),
       );
     },
-    Profile.name: (routeData) {
+    VideoDetailsRoute.name: (routeData) {
+      final args = routeData.argsAs<VideoDetailsRouteArgs>();
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: VideoDetailsPage(
+          key: args.key,
+          video: args.video,
+        ),
+      );
+    },
+    NewsLetterDetailsRoute.name: (routeData) {
+      final args = routeData.argsAs<NewsLetterDetailsRouteArgs>();
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: NewsLetterDetailsPage(
+          key: args.key,
+          title: args.title,
+          content: args.content,
+        ),
+      );
+    },
+    NewsLettersListRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const NewsLettersListPage(),
+      );
+    },
+    UserProfileRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const UserProfilePage(),
@@ -64,31 +91,43 @@ class _$AppRouter extends RootStackRouter {
   @override
   List<RouteConfig> get routes => [
         RouteConfig(
-          Authentification.name,
+          AuthenticationRoute.name,
           path: '/auth',
         ),
         RouteConfig(
-          Accueil.name,
+          UserHomeRoute.name,
           path: '/',
         ),
         RouteConfig(
-          Telechargements.name,
+          DownloadsRoute.name,
           path: '/downloads',
         ),
         RouteConfig(
-          Talents_pepites.name,
+          PodcastsListRoute.name,
           path: '/podcasts',
         ),
         RouteConfig(
-          Information_pepites.name,
+          PodcastDetailsRoute.name,
+          path: '/podcasts/read',
+        ),
+        RouteConfig(
+          VideosListRoute.name,
           path: '/videos',
         ),
         RouteConfig(
-          Concepts_pepites.name,
+          VideoDetailsRoute.name,
+          path: '/videos/watch',
+        ),
+        RouteConfig(
+          NewsLetterDetailsRoute.name,
+          path: '/newsletters/read',
+        ),
+        RouteConfig(
+          NewsLettersListRoute.name,
           path: '/newsletters',
         ),
         RouteConfig(
-          Profile.name,
+          UserProfileRoute.name,
           path: '/account',
         ),
       ];
@@ -96,84 +135,169 @@ class _$AppRouter extends RootStackRouter {
 
 /// generated route for
 /// [AuthenticationPage]
-class Authentification extends PageRouteInfo<void> {
-  const Authentification()
+class AuthenticationRoute extends PageRouteInfo<void> {
+  const AuthenticationRoute()
       : super(
-          Authentification.name,
+          AuthenticationRoute.name,
           path: '/auth',
         );
 
-  static const String name = 'Authentification';
+  static const String name = 'AuthenticationRoute';
 }
 
 /// generated route for
 /// [UserHomePage]
-class Accueil extends PageRouteInfo<void> {
-  const Accueil()
+class UserHomeRoute extends PageRouteInfo<void> {
+  const UserHomeRoute()
       : super(
-          Accueil.name,
+          UserHomeRoute.name,
           path: '/',
         );
 
-  static const String name = 'Accueil';
+  static const String name = 'UserHomeRoute';
 }
 
 /// generated route for
 /// [DownloadsPage]
-class Telechargements extends PageRouteInfo<void> {
-  const Telechargements()
+class DownloadsRoute extends PageRouteInfo<void> {
+  const DownloadsRoute()
       : super(
-          Telechargements.name,
+          DownloadsRoute.name,
           path: '/downloads',
         );
 
-  static const String name = 'Telechargements';
+  static const String name = 'DownloadsRoute';
 }
 
 /// generated route for
-/// [PodcastPage]
-class Talents_pepites extends PageRouteInfo<void> {
-  const Talents_pepites()
+/// [PodcastsListPage]
+class PodcastsListRoute extends PageRouteInfo<void> {
+  const PodcastsListRoute()
       : super(
-          Talents_pepites.name,
+          PodcastsListRoute.name,
           path: '/podcasts',
         );
 
-  static const String name = 'Talents_pepites';
+  static const String name = 'PodcastsListRoute';
 }
 
 /// generated route for
-/// [VideoPage]
-class Information_pepites extends PageRouteInfo<void> {
-  const Information_pepites()
+/// [PodcastDetailsPage]
+class PodcastDetailsRoute extends PageRouteInfo<void> {
+  const PodcastDetailsRoute()
       : super(
-          Information_pepites.name,
+          PodcastDetailsRoute.name,
+          path: '/podcasts/read',
+        );
+
+  static const String name = 'PodcastDetailsRoute';
+}
+
+/// generated route for
+/// [VideosListPage]
+class VideosListRoute extends PageRouteInfo<void> {
+  const VideosListRoute()
+      : super(
+          VideosListRoute.name,
           path: '/videos',
         );
 
-  static const String name = 'Information_pepites';
+  static const String name = 'VideosListRoute';
 }
 
 /// generated route for
-/// [NewsLettersPage]
-class Concepts_pepites extends PageRouteInfo<void> {
-  const Concepts_pepites()
+/// [VideoDetailsPage]
+class VideoDetailsRoute extends PageRouteInfo<VideoDetailsRouteArgs> {
+  VideoDetailsRoute({
+    Key? key,
+    required Video video,
+  }) : super(
+          VideoDetailsRoute.name,
+          path: '/videos/watch',
+          args: VideoDetailsRouteArgs(
+            key: key,
+            video: video,
+          ),
+        );
+
+  static const String name = 'VideoDetailsRoute';
+}
+
+class VideoDetailsRouteArgs {
+  const VideoDetailsRouteArgs({
+    this.key,
+    required this.video,
+  });
+
+  final Key? key;
+
+  final Video video;
+
+  @override
+  String toString() {
+    return 'VideoDetailsRouteArgs{key: $key, video: $video}';
+  }
+}
+
+/// generated route for
+/// [NewsLetterDetailsPage]
+class NewsLetterDetailsRoute extends PageRouteInfo<NewsLetterDetailsRouteArgs> {
+  NewsLetterDetailsRoute({
+    Key? key,
+    required String title,
+    required String content,
+  }) : super(
+          NewsLetterDetailsRoute.name,
+          path: '/newsletters/read',
+          args: NewsLetterDetailsRouteArgs(
+            key: key,
+            title: title,
+            content: content,
+          ),
+        );
+
+  static const String name = 'NewsLetterDetailsRoute';
+}
+
+class NewsLetterDetailsRouteArgs {
+  const NewsLetterDetailsRouteArgs({
+    this.key,
+    required this.title,
+    required this.content,
+  });
+
+  final Key? key;
+
+  final String title;
+
+  final String content;
+
+  @override
+  String toString() {
+    return 'NewsLetterDetailsRouteArgs{key: $key, title: $title, content: $content}';
+  }
+}
+
+/// generated route for
+/// [NewsLettersListPage]
+class NewsLettersListRoute extends PageRouteInfo<void> {
+  const NewsLettersListRoute()
       : super(
-          Concepts_pepites.name,
+          NewsLettersListRoute.name,
           path: '/newsletters',
         );
 
-  static const String name = 'Concepts_pepites';
+  static const String name = 'NewsLettersListRoute';
 }
 
 /// generated route for
 /// [UserProfilePage]
-class Profile extends PageRouteInfo<void> {
-  const Profile()
+class UserProfileRoute extends PageRouteInfo<void> {
+  const UserProfileRoute()
       : super(
-          Profile.name,
+          UserProfileRoute.name,
           path: '/account',
         );
 
-  static const String name = 'Profile';
+  static const String name = 'UserProfileRoute';
 }

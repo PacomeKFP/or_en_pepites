@@ -7,17 +7,17 @@ import '../Components/AppBar.dart';
 import '../Components/BottomNavigationBar.dart';
 import '../Components/Drawer.dart';
 
-class VideoPage extends StatelessWidget {
-  const VideoPage({super.key});
+class PodcastDetailsPage extends StatelessWidget {
+  const PodcastDetailsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: appBarComponent(context, getRouteName(context.topRoute.name)),
+      appBar: appBarComponent(context, "Talents en Pépites"),
       endDrawer: const DrawerComponent(),
       bottomNavigationBar: const AppNavigation(
-        currentIndex: 2,
+        currentIndex: 1,
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -31,7 +31,7 @@ class VideoPage extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(vertical: Dimens.oneHalfPadding),
                 child: Text(
-                  'Videos',
+                  'Podcasts',
                   style: Theme.of(context)
                       .textTheme
                       .headlineLarge!
