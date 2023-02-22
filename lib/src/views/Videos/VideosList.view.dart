@@ -1,16 +1,22 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/services/Resources/video.dart';
-import 'package:or_en_pepite/src/utils/functions.dart';
 import 'package:or_en_pepite/src/views/Videos/Components/VideoItemComponent.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 import '../Components/AppBar.dart';
 import '../Components/BottomNavigationBar.dart';
 import '../Components/Drawer.dart';
 
-class VideosListPage extends StatelessWidget {
+class VideosListPage extends StatefulWidget {
   const VideosListPage({super.key});
+
+  @override
+  State<VideosListPage> createState() => _VideosListPageState();
+}
+
+class _VideosListPageState extends State<VideosListPage> {
+  List<Future<Video>?> videos = VideoRessource.getVideos();
 
   @override
   Widget build(BuildContext context) {
@@ -27,41 +33,49 @@ class VideosListPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(
             horizontal: Dimens.padding, vertical: Dimens.doublePadding),
         child: SingleChildScrollView(
-          child: StreamBuilder(
-            stream: VideoRessource.getVideos(),
-            builder: (context, snapshot) {
-              Widget child = const Center(child: CircularProgressIndicator());
+            child: Column(
+          children: videos
+              .map(
+                (video) => FutureBuilder(
+                  future: video,
+                  builder: (context, snapshot) {
+                    Widget child =
+                        const Center(child: CircularProgressIndicator());
+                    List<Widget> children = [];
 
-              switch (snapshot.connectionState) {
-                case ConnectionState.none:
-                  continue display;
-                case ConnectionState.active:
-                  continue display;
-                case ConnectionState.waiting:
-                  continue display;
-                case ConnectionState.done:
-                  if (snapshot.hasError) {
-                    child = const Text(
-                        "Une erreur es survenue, veullez relancer l'application");
-                    continue display;
-                  }
-                  if (!snapshot.hasData) {
-                    child = const Text("Aucune newsletter n'est disponible");
-                    continue display;
-                  }
-                  child = VideoItemComponent(video: snapshot.data!);
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.none:
+                        continue display;
+                      case ConnectionState.active:
+                        continue display;
+                      case ConnectionState.waiting:
+                        continue display;
+                      case ConnectionState.done:
+                        if (snapshot.hasError) {
+                          child = Text(
+                              snapshot.error.toString());
+                          continue display;
+                        }
+                        if (!snapshot.hasData) {
+                          child =
+                              const Text("Aucune newsletter n'est disponible");
+                          continue display;
+                        }
+                        child = VideoItemComponent(video: snapshot.data!);
 
-                  continue display;
-                display:
-                default:
-                  return AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 300),
-                    child: child,
-                  );
-              }
-            },
-          ),
-        ),
+                        continue display;
+                      display:
+                      default:
+                        return AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          child: child
+                        );
+                    }
+                  },
+                ),
+              )
+              .toList(),
+        )),
       ),
     ));
   }

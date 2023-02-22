@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "766139655028",
+    "project_id": "or-en-pepite",
+    "storage_bucket": "or-en-pepite.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:766139655028:android:99852967bbfa8a3c378221",
+        "android_client_info": {
+          "package_name": "com.example.or_en_pepite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "766139655028-g19m5jtacusmcb1r0c95sh5pf04dcv04.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnAJgfmILDfrNGxaR8Pcbu3CipJ0Rm4Uo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "766139655028-g19m5jtacusmcb1r0c95sh5pf04dcv04.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "766139655028-re8mdnekk9t5klj03rcj4dp77fnolj8m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.orEnPepite"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

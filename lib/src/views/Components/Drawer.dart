@@ -1,18 +1,23 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
+import 'package:or_en_pepite/src/logic/Authentication/authentication_bloc.dart';
 import 'package:or_en_pepite/src/models/models.dart';
 import 'package:or_en_pepite/src/models/types/navigation.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:or_en_pepite/src/services/Authentication/Auth.service.dart';
+import 'package:or_en_pepite/src/views/Auth/Auth.view.dart';
 
 class DrawerComponent extends StatelessWidget {
   const DrawerComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    UserModel user = UserModel(
-        name: 'Pacome Kengali Fegue',
-        email: 'pacomekengafe@gmail.com',
-        facebook: 'facebook.com/pacomekfp');
+    // UserModel user = UserModel(
+    //     name: 'Pacome Kengali Fegue',
+    //     email: 'pacomekengafe@gmail.com',
+    //     facebook: 'facebook.com/pacomekfp');
 
     return Drawer(
       width: MediaQuery.of(context).size.width * 0.75,
@@ -28,28 +33,34 @@ class DrawerComponent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           //adding user profile
-          UserAccountsDrawerHeader(
-            decoration:
-                BoxDecoration(color: AppColors.light().gold.withOpacity(0.8)),
-            accountName: Text(
-              user.name!,
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: Colors.black87,
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            accountEmail: Text(
-              user.email!,
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: Colors.black87,
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            currentAccountPicture: CircleAvatar(
-              radius: 400,
-              backgroundColor: Colors.white30,
-              child: Image.asset(user.picture),
-            ),
+          BlocBuilder<AuthenticationBloc, AuthenticationState>(
+            builder: (context, state) {
+              return UserAccountsDrawerHeader(
+                decoration: BoxDecoration(
+                    color: AppColors.light().gold.withOpacity(0.8)),
+                accountName: Text(
+                  (state as AuthenticationInitial).currentUser!.displayName!,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                accountEmail: Text(
+                  (state as AuthenticationInitial).currentUser!.email!,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                currentAccountPicture: CircleAvatar(
+                  radius: 400,
+                  backgroundColor: Colors.white30,
+                  child: Image.asset(
+                      (state as AuthenticationInitial).currentUser!.photoURL ??
+                          'assets/images/profil.png'),
+                ),
+              );
+            },
           ),
           //adding options
           ...DrawerOptions.values

@@ -12,43 +12,43 @@ class UserHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       appBar: appBarComponent(context, "Accueil"),
       endDrawer: const DrawerComponent(),
       bottomNavigationBar: const AppNavigation(
-        currentIndex: 0,
+    currentIndex: 0,
       ),
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Image.asset('assets/images/home.png'),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: Dimens.oneHalfPadding,
-                    horizontal: Dimens.doublePadding),
-                child: Text(
-                  'Bienvenue',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineLarge!
-                      .copyWith(color: AppColors.light().gold),
-                ),
-              ),
-              Text(
-                AppTexts.welcome,
+      body: SafeArea(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Image.asset('assets/images/home.png'),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: Dimens.doublePadding),
+              child: Text(
+                'Bienvenue',
                 style: Theme.of(context)
                     .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Colors.black87),
-              )
-            ],
+                    .headlineLarge!
+                    .copyWith(color: AppColors.light().gold),
+              ),
+            ),
+            Text(
+              AppTexts.welcome,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(color: Colors.black87),
+            )
+          ],
+        ),
           ),
         ),
       ),
-    ));
+    );
   }
 }

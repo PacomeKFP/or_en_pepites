@@ -2,9 +2,22 @@ part of models;
 
 enum AuthType {
   login,
-  register;
+  register,
+  authenticate;
 
   get label => this == login ? 'Se Connecter' : "S'inscrire";
+}
+
+enum AuthState {
+  authenticated,
+  unAuthenticated,
+  unknown;
+}
+
+enum AuthMethod {
+  email,
+  google,
+  facebook;
 }
 
 enum SocialButtons {
@@ -14,6 +27,8 @@ enum SocialButtons {
   github,
   twitter;
 
+  AuthMethod get authMethod =>
+      this == google ? AuthMethod.google : AuthMethod.facebook;
   String get label => [google, googleDark].contains(this)
       ? 'Google'
       : this == facebookNew
@@ -21,7 +36,7 @@ enum SocialButtons {
           : this == github
               ? 'Github'
               : 'Twitter';
-  Function() get loginMethod => () => debugPrint('Sign with $label');
+  // Function() get loginMethod => () => debugPrint('Sign with $label');
 
   String get imageName => this == google
       ? 'google_light.png'
@@ -30,7 +45,7 @@ enum SocialButtons {
           : 'facebook_new.png';
   Widget get icon => [google, googleDark].contains(this)
       ? Image.asset(
-          'logos/$imageName',
+          'assets/logos/$imageName',
           width: 84,
         )
       : const Icon(

@@ -20,15 +20,13 @@ class VideoRessource extends ResourcesServices {
     return video;
   }
 
-  static Stream<Video> getVideos() async* {
-    List<String> ids = (await ResourcesServices.getRessources(
-        ResourceLocation.remote))!['videos'];
-
+  static List<Future<Video>?> getVideos() {
     YoutubeExplode yt = YoutubeExplode();
-    for (String id in ids) {
-      Video video = await yt.videos.get("https://youtu.be/$id");
-      yield video;
-    }
+    List ids = ["https://youtu.be/sPNWQzHHm88"];
+    List<Future<Video>> res = ids.map((id) =>  yt.videos.get(id)).toList();
+
+    print(res.length);
+    return res;
   }
 
   String remoteVideoLink(String videoId) => "youtu.be/$videoId";

@@ -9,8 +9,9 @@ class CustomTextField extends StatefulWidget {
   TextEditingController controller;
   final bool isRequired;
   final List<FormValidators>? validators;
-   CustomTextField(
-      {super.key, this.label = "",
+  CustomTextField(
+      {super.key,
+      this.label = "",
       this.placedholder = "",
       this.isObscurable = false,
       required this.controller,
@@ -38,6 +39,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
       child: TextFormField(
+        keyboardType: widget.label.toLowerCase().contains('email')
+            ? TextInputType.emailAddress
+            : TextInputType.text,
         validator: (value) {
           if (!widget.isRequired) return null;
           bool isValid = true;

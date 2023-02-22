@@ -1,8 +1,15 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/models/models.dart';
+import 'package:or_en_pepite/src/services/Authentication/Auth.service.dart';
 import 'package:or_en_pepite/src/views/Components/TextFormField.dart';
+
+import '../../../logic/Authentication/authentication_bloc.dart';
 
 class EmailPasswordAuth extends StatefulWidget {
   AuthType authType;
@@ -18,6 +25,8 @@ class _EmailPasswordStateAuth extends State<EmailPasswordAuth> {
     for (var item in ['email', 'password', 'password_confirm', 'full_name'])
       item.toString(): TextEditingController()
   };
+
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +44,14 @@ class _EmailPasswordStateAuth extends State<EmailPasswordAuth> {
           key: _formKey,
           child: Column(
             children: [
-              if (widget.authType == AuthType.register)
-                CustomTextField(
-                  controller: controllers['full_name']!,
-                  icon: Icons.account_circle_outlined,
-                  label: 'Nom complet',
-                  placedholder: 'Entrer votre nom ...',
-                ),
+              widget.authType == AuthType.register
+                  ? CustomTextField(
+                      controller: controllers['full_name']!,
+                      icon: Icons.account_circle_outlined,
+                      label: 'Nom complet',
+                      placedholder: 'Entrer votre nom ...',
+                    )
+                  : const SizedBox(height: 50),
               CustomTextField(
                 controller: controllers['email']!,
                 icon: Icons.mail_outline_rounded,
@@ -61,50 +71,95 @@ class _EmailPasswordStateAuth extends State<EmailPasswordAuth> {
                 placedholder: 'Entrer votre mot de passe ...',
                 isObscurable: true,
               ),
-              if (widget.authType == AuthType.register)
-                CustomTextField(
-                  controller: controllers['password_confirm']!,
-                  icon: Icons.key_rounded,
-                  validators: [
-                  (v) =>
-                      controllers['password_confirm']!.text !=
-                      controllers['password']!.text
-                ],
-                  label: 'Confirmez votre mot de passe',
-                  placedholder: 'Entrer votre mot de passe à nouveau...',
-                  isObscurable: true,
-                ),
+              widget.authType == AuthType.register
+                  ? CustomTextField(
+                      controller: controllers['password_confirm']!,
+                      icon: Icons.key_rounded,
+                      validators: [
+                        (v) =>
+                            controllers['password_confirm']!.text !=
+                            controllers['password']!.text
+                      ],
+                      label: 'Confirmez votre mot de passe',
+                      placedholder: 'Entrer votre mot de passe à nouveau...',
+                      isObscurable: true,
+                    )
+                  : const SizedBox(height: 50),
 
               const SizedBox(height: 25),
 
               // Validation button
-              InkWell(
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      borderRadius: const BorderRadius.all(Radius.circular(8))),
-                  width: double.infinity,
-                  height: 45,
-                  alignment: Alignment.center,
-                  child: Text(widget.authType.label,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineSmall!
-                          .copyWith(
-                              color: Theme.of(context).colorScheme.onPrimary)),
+              BlocProvider(
+                create: (context) => AuthenticationBloc(),
+                child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                  builder: (context, state) {
+                    return BlocListener<AuthenticationBloc,
+                        AuthenticationState>(
+                      listener: (context, state) {
+                        print('new change');
+                        print(FirebaseAuth.instance.currentUser);
+                        if ((state as AuthenticationInitial).authState ==
+                            AuthState.authenticated) {
+                          context.router.pushNamed('/');
+                        }
+                      },
+                      child: InkWell(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.primary,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(8))),
+                          width: double.infinity,
+                          height: 45,
+                          alignment: Alignment.center,
+                          child: Text(widget.authType.label,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall!
+                                  .copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary)),
+                        ),
+                        onTap: () async {
+                          if (_formKey.currentState!.validate()) {
+                            context.read<AuthenticationBloc>().add(
+                                  AuthenticateUser(
+                                      authType: widget.authType,
+                                      authMethod: AuthMethod.email,
+                                      data: {
+                                        "email":
+                                            controllers['email']!.text.trim(),
+                                        "password":
+                                            controllers['password']!.text,
+                                        "name": controllers['full_name']!.text
+                                      }),
+                                );
+
+                            Timer(Duration(seconds: 3), () {
+                              if ((state as AuthenticationInitial).authState ==
+                                  AuthState.authenticated) {
+                                // context.router.pushNamed('/');
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content:
+                                            Text("Authentification reussie")));
+                              }
+                            });
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text(
+                                      "Echec de l'authentification veuillez reéssayez")),
+                            );
+                          }
+                        },
+                      ),
+                    );
+                  },
                 ),
-                onTap: () {
-                  if (_formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')));
-                    context.router.pushNamed('/');
-                  }
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('cancelled')),
-                  );
-                },
               ),
             ],
           ),

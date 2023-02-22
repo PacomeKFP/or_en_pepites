@@ -13,77 +13,112 @@
 part of 'app_router.dart';
 
 class _$AppRouter extends RootStackRouter {
-  _$AppRouter([GlobalKey<NavigatorState>? navigatorKey]) : super(navigatorKey);
+  _$AppRouter({
+    GlobalKey<NavigatorState>? navigatorKey,
+    required this.checkAuthState,
+  }) : super(navigatorKey);
+
+  final CheckAuthState checkAuthState;
 
   @override
   final Map<String, PageFactory> pagesMap = {
     AuthenticationRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
+      return CustomPage<dynamic>(
         routeData: routeData,
         child: const AuthenticationPage(),
+        transitionsBuilder: TransitionsBuilders.zoomIn,
+        opaque: true,
+        barrierDismissible: false,
       );
     },
     UserHomeRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
+      return CustomPage<dynamic>(
         routeData: routeData,
         child: const UserHomePage(),
+        transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+        opaque: true,
+        barrierDismissible: false,
       );
     },
     DownloadsRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
+      return CustomPage<dynamic>(
         routeData: routeData,
         child: const DownloadsPage(),
+        transitionsBuilder: TransitionsBuilders.slideLeft,
+        opaque: true,
+        barrierDismissible: false,
       );
     },
     PodcastsListRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
+      return CustomPage<dynamic>(
         routeData: routeData,
         child: const PodcastsListPage(),
+        transitionsBuilder: TransitionsBuilders.slideTop,
+        opaque: true,
+        barrierDismissible: false,
       );
     },
     PodcastDetailsRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
+      return CustomPage<dynamic>(
         routeData: routeData,
         child: const PodcastDetailsPage(),
+        transitionsBuilder: TransitionsBuilders.zoomIn,
+        opaque: true,
+        barrierDismissible: false,
       );
     },
     VideosListRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
+      return CustomPage<dynamic>(
         routeData: routeData,
         child: const VideosListPage(),
+        transitionsBuilder: TransitionsBuilders.slideTop,
+        opaque: true,
+        barrierDismissible: false,
       );
     },
     VideoDetailsRoute.name: (routeData) {
       final args = routeData.argsAs<VideoDetailsRouteArgs>();
-      return MaterialPageX<dynamic>(
+      return CustomPage<dynamic>(
         routeData: routeData,
         child: VideoDetailsPage(
           key: args.key,
           video: args.video,
         ),
+        transitionsBuilder: TransitionsBuilders.zoomIn,
+        opaque: true,
+        barrierDismissible: false,
       );
     },
     NewsLetterDetailsRoute.name: (routeData) {
       final args = routeData.argsAs<NewsLetterDetailsRouteArgs>();
-      return MaterialPageX<dynamic>(
+      return CustomPage<dynamic>(
         routeData: routeData,
         child: NewsLetterDetailsPage(
           key: args.key,
           title: args.title,
           content: args.content,
         ),
+        transitionsBuilder: TransitionsBuilders.slideBottom,
+        opaque: true,
+        barrierDismissible: false,
       );
     },
     NewsLettersListRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
+      return CustomPage<dynamic>(
         routeData: routeData,
         child: const NewsLettersListPage(),
+        transitionsBuilder: TransitionsBuilders.zoomIn,
+        opaque: true,
+        barrierDismissible: false,
       );
     },
     UserProfileRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
+      return CustomPage<dynamic>(
         routeData: routeData,
         child: const UserProfilePage(),
+        transitionsBuilder: TransitionsBuilders.slideRight,
+        opaque: true,
+        barrierDismissible: false,
       );
     },
   };
@@ -97,38 +132,47 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           UserHomeRoute.name,
           path: '/',
+          guards: [checkAuthState],
         ),
         RouteConfig(
           DownloadsRoute.name,
           path: '/downloads',
+          guards: [checkAuthState],
         ),
         RouteConfig(
           PodcastsListRoute.name,
           path: '/podcasts',
+          guards: [checkAuthState],
         ),
         RouteConfig(
           PodcastDetailsRoute.name,
           path: '/podcasts/read',
+          guards: [checkAuthState],
         ),
         RouteConfig(
           VideosListRoute.name,
           path: '/videos',
+          guards: [checkAuthState],
         ),
         RouteConfig(
           VideoDetailsRoute.name,
           path: '/videos/watch',
+          guards: [checkAuthState],
         ),
         RouteConfig(
           NewsLetterDetailsRoute.name,
           path: '/newsletters/read',
+          guards: [checkAuthState],
         ),
         RouteConfig(
           NewsLettersListRoute.name,
           path: '/newsletters',
+          guards: [checkAuthState],
         ),
         RouteConfig(
           UserProfileRoute.name,
           path: '/account',
+          guards: [checkAuthState],
         ),
       ];
 }

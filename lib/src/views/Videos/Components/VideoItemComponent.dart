@@ -15,30 +15,15 @@ class VideoItemComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => context.router.push(VideoDetailsRoute(video: video)),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: Dimens.halfSpace),
-        height: MediaQuery.of(context).size.height / 6,
-        child: ListTile(
-          leading: Container(
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(Dimens.radius))),
-            child: Image.network(
-              video.thumbnails.mediumResUrl,
-            ),
-          ),
-          title: Text(
-            video.title,
-            style: GoogleFonts.roboto(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          subtitle: Text(
-            video.description,
-            overflow: TextOverflow.ellipsis,
-            style: GoogleFonts.roboto(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+      child: Card(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: Dimens.halfSpace),
+          // height: 300,
+          child: Column(
+            
+          )
+          
+
         ),
       ),
     );
