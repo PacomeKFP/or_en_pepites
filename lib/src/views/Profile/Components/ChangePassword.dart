@@ -26,19 +26,23 @@ class _ChangePasswordComponentState extends State<ChangePasswordComponent> {
               title: const Text('Modification de mot de passe'),
               content: Form(
                 key: _formKey,
-                child: Column(
-                  children: [
-                    ...[0, 1]
-                        .map((i) => CustomTextField(
-                              controller: controllers[i],
-                              label: labels[i],
-                              placedholder: labels[i],
-                              icon: Icons.key_sharp,
-                              isObscurable: true,
-                            ))
-                        .toList(),
-                    const SizedBox(height: 10),
-                  ],
+                child: Container(
+                  height: 180,
+                  child: Column(
+                    children: [
+                      
+                      ...[0, 1]
+                          .map((i) => CustomTextField(
+                                controller: controllers[i],
+                                label: labels[i],
+                                placedholder: labels[i],
+                                icon: Icons.key_sharp,
+                                isObscurable: true,
+                              ))
+                          .toList(),
+                      const SizedBox(height: 10),
+                    ],
+                  ),
                 ),
               ),
               actions: [
@@ -53,9 +57,8 @@ class _ChangePasswordComponentState extends State<ChangePasswordComponent> {
                 const SizedBox(width: Dimens.space),
                 TextButton(
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                          Theme.of(context).colorScheme.error)
-                    ),
+                        backgroundColor: MaterialStateProperty.all(
+                            Theme.of(context).colorScheme.error)),
                     onPressed: () => Navigator.of(context).pop(),
                     child: const Text('Annuler'))
               ],

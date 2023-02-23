@@ -18,6 +18,7 @@ class DrawerComponent extends StatelessWidget {
     //     name: 'Pacome Kengali Fegue',
     //     email: 'pacomekengafe@gmail.com',
     //     facebook: 'facebook.com/pacomekfp');
+    User user = FirebaseAuth.instance.currentUser!;
 
     return Drawer(
       width: MediaQuery.of(context).size.width * 0.75,
@@ -33,34 +34,28 @@ class DrawerComponent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           //adding user profile
-          BlocBuilder<AuthenticationBloc, AuthenticationState>(
-            builder: (context, state) {
-              return UserAccountsDrawerHeader(
-                decoration: BoxDecoration(
-                    color: AppColors.light().gold.withOpacity(0.8)),
-                accountName: Text(
-                  (state as AuthenticationInitial).currentUser!.displayName!,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: Colors.black87,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                accountEmail: Text(
-                  (state as AuthenticationInitial).currentUser!.email!,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: Colors.black87,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                currentAccountPicture: CircleAvatar(
-                  radius: 400,
-                  backgroundColor: Colors.white30,
-                  child: Image.asset(
-                      (state as AuthenticationInitial).currentUser!.photoURL ??
-                          'assets/images/profil.png'),
-                ),
-              );
-            },
+          UserAccountsDrawerHeader(
+            decoration:
+                BoxDecoration(color: AppColors.light().gold.withOpacity(0.8)),
+            accountName: Text(
+              user.displayName!,
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: Colors.black87,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            accountEmail: Text(
+              user.email!,
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: Colors.black87,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            currentAccountPicture: CircleAvatar(
+              radius: 400,
+              backgroundColor: Colors.white30,
+              child: Image.asset(user.photoURL ?? 'assets/images/profil.png'),
+            ),
           ),
           //adding options
           ...DrawerOptions.values
@@ -83,6 +78,25 @@ class DrawerComponent extends StatelessWidget {
                 ),
               )
               .toList(),
+
+          const SizedBox(height: 25),
+          ListTile(
+            leading: const Icon(Icons.logout_rounded, color: Colors.amber),
+            title: Text(
+              "Se deconnecter",
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium!
+                  .copyWith(color: AppColors.light().gold),
+            ),
+            onTap: () {
+              FirebaseAuth.instance.signOut().then((value) =>
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('Vous avez eté deconnecté avec succes'))));
+              context.router.pushNamed('/auth');
+            },
+          ),
+          const SizedBox(height: 50),
 
           //application info
           AboutListTile(

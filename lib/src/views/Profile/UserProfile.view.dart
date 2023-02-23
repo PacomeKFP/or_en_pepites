@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 
+import '../Components/AppBar.dart';
+import '../Components/Drawer.dart';
+import 'Components/AccountFileds.dart';
 import 'Components/ChangePassword.dart';
 
 class UserProfilePage extends StatelessWidget {
@@ -8,9 +11,11 @@ class UserProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
+    return Scaffold(
+      appBar: appBarComponent(context, "Mon Compte"),
+      endDrawer: const DrawerComponent(),
+      body: SafeArea(
+        child: Container(
           padding: const EdgeInsets.symmetric(horizontal: Dimens.doublePadding),
           width: double.infinity,
           height: MediaQuery.of(context).size.width,
@@ -28,7 +33,9 @@ class UserProfilePage extends StatelessWidget {
                         .copyWith(color: AppColors.light().gold),
                   ),
                 ),
-
+      
+      
+                const AccountsFields(),
                 ///TODO: verifier le type d'auth:  SOCIAL ou EMAIL-PASS
                 const ChangePasswordComponent()
               ],

@@ -63,11 +63,13 @@ class _EmailPasswordStateAuth extends State<EmailPasswordAuth> {
                 controller: controllers['password']!,
                 icon: Icons.key_sharp,
                 label: 'Mot de passe',
-                validators: [
-                  (v) =>
-                      controllers['password_confirm']!.text !=
-                      controllers['password']!.text
-                ],
+                validators: widget.authType == AuthType.register
+                    ? [
+                        (v) =>
+                            controllers['password_confirm']!.text !=
+                            controllers['password']!.text
+                      ]
+                    : null,
                 placedholder: 'Entrer votre mot de passe ...',
                 isObscurable: true,
               ),

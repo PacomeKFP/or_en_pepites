@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
+// import 'package:just_audio/just_audio.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/core/router/app_router.dart';
 import 'package:or_en_pepite/src/models/models.dart';
@@ -27,16 +28,16 @@ class _PodcastItemComponentState extends State<PodcastItemComponent> {
   late AudioPlayer _player;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _player = AudioPlayer();
+    _player.setSource(UrlSource(widget.podcast.url)).then((value) => null);
   }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () =>
-          context.router.push(PodcastDetailsRoute(podcast: widget.podcast)),
+      onTap: () => 
+          context.router.push(PodcastDetailsRoute(podcast: widget.podcast, playerId: _player.playerId)),
       child: Card(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(Dimens.radius)),
@@ -59,7 +60,7 @@ class _PodcastItemComponentState extends State<PodcastItemComponent> {
                           !widget.players[widget.index];
                     });
                     if (widget.players[widget.index]) {
-                      return await _player.play();
+                      return await _player.resume();
                     }
                     return await _player.pause();
                   },

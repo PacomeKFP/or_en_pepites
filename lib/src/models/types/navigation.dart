@@ -55,7 +55,7 @@ enum DrawerOptions {
   favorite,
   history;
 
-  String get path => this == account ? "/account":"/home";
+  String get path => this == account ? "/account" : "/home";
   String get label => this == account
       ? 'Mon compte'
       : this == favorite

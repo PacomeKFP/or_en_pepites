@@ -26,16 +26,19 @@ class _VideoDetailsPageState extends State<VideoDetailsPage> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.network(widget.video.url)
-      ..initialize().then((_) {
-        setState(() {});
-      });
+    // _controller = VideoPlayerController.network(widget.video.url)
+    //   ..initialize().then((_) {
+    //     setState(() {});
+    //   });
+    _controller2 = YoutubePlayerController(
+      initialVideoId: "sPNWQzHHm88"
+    );
   }
 
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();
+    _controller2.dispose();
   }
 
   @override
@@ -55,25 +58,25 @@ class _VideoDetailsPageState extends State<VideoDetailsPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              _controller.value.isInitialized
-                  ? AspectRatio(
-                      aspectRatio: _controller.value.aspectRatio,
-                      child: VideoPlayer(_controller),
-                    )
-                  : CircularProgressIndicator(),
+              // _controller.value.isInitialized
+              //     ? AspectRatio(
+              //         aspectRatio: _controller.value.aspectRatio,
+              //         child: VideoPlayer(_controller),
+              //       )
+              //     : CircularProgressIndicator(),
 
-              // YoutubePlayer(
-              //   controller: _controller2,
-              //   showVideoProgressIndicator: true,
-              //   progressIndicatorColor: Colors.amber,
-              //   progressColors:const  ProgressBarColors(
-              //     playedColor: Colors.amber,
-              //     handleColor: Colors.amberAccent,
-              //   ),
-              //   onReady: () {
-              //     print('Player is ready.');
-              //   },
-              // ),
+              YoutubePlayer(
+                controller: _controller2,
+                showVideoProgressIndicator: true,
+                progressIndicatorColor: Colors.amber,
+                progressColors: const ProgressBarColors(
+                  playedColor: Colors.amber,
+                  handleColor: Colors.amberAccent,
+                ),
+                onReady: () {
+                  print('Player is ready.');
+                },
+              ),
               Text(
                 widget.video.title,
                 style: Theme.of(context)
@@ -85,18 +88,6 @@ class _VideoDetailsPageState extends State<VideoDetailsPage> {
               Text(widget.video.description)
             ],
           ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            _controller.value.isPlaying
-                ? _controller.pause()
-                : _controller.play();
-          });
-        },
-        child: Icon(
-          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
         ),
       ),
     ));

@@ -65,6 +65,7 @@ class _$AppRouter extends RootStackRouter {
         child: PodcastDetailsPage(
           key: args.key,
           podcast: args.podcast,
+          playerId: args.playerId,
         ),
         transitionsBuilder: TransitionsBuilders.zoomIn,
         opaque: true,
@@ -235,12 +236,14 @@ class PodcastDetailsRoute extends PageRouteInfo<PodcastDetailsRouteArgs> {
   PodcastDetailsRoute({
     Key? key,
     required PodcastModel podcast,
+    required String playerId,
   }) : super(
           PodcastDetailsRoute.name,
           path: '/podcasts/read',
           args: PodcastDetailsRouteArgs(
             key: key,
             podcast: podcast,
+            playerId: playerId,
           ),
         );
 
@@ -251,15 +254,18 @@ class PodcastDetailsRouteArgs {
   const PodcastDetailsRouteArgs({
     this.key,
     required this.podcast,
+    required this.playerId,
   });
 
   final Key? key;
 
   final PodcastModel podcast;
 
+  final String playerId;
+
   @override
   String toString() {
-    return 'PodcastDetailsRouteArgs{key: $key, podcast: $podcast}';
+    return 'PodcastDetailsRouteArgs{key: $key, podcast: $podcast, playerId: $playerId}';
   }
 }
 

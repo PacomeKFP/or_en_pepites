@@ -9,7 +9,8 @@ class AccountsFields extends StatelessWidget {
   Widget build(BuildContext context) {
     return Form(child: Column(
       children: [
-        
+        const Text(
+                          "Ici on affichera les infos du compte utilisateur, en lui proposant de les modifier"),
       ],
     ));
   }
