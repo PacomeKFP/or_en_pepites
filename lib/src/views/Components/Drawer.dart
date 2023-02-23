@@ -52,9 +52,9 @@ class DrawerComponent extends StatelessWidget {
                   ),
             ),
             currentAccountPicture: CircleAvatar(
-              radius: 400,
+              radius: 15,
               backgroundColor: Colors.white30,
-              child: Image.asset(user.photoURL ?? 'assets/images/profil.png'),
+              child:user.photoURL == null? Image.asset('assets/images/profil.png') :Image.network(user.photoURL!),
             ),
           ),
           //adding options
