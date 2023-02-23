@@ -10,6 +10,7 @@
    <application
         android:label="Or en Pépites"
         android:name="${applicationName}"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver"
               android:exported="true">   

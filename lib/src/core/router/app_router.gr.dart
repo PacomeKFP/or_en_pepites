@@ -59,9 +59,13 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     PodcastDetailsRoute.name: (routeData) {
+      final args = routeData.argsAs<PodcastDetailsRouteArgs>();
       return CustomPage<dynamic>(
         routeData: routeData,
-        child: const PodcastDetailsPage(),
+        child: PodcastDetailsPage(
+          key: args.key,
+          podcast: args.podcast,
+        ),
         transitionsBuilder: TransitionsBuilders.zoomIn,
         opaque: true,
         barrierDismissible: false,
@@ -227,14 +231,36 @@ class PodcastsListRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [PodcastDetailsPage]
-class PodcastDetailsRoute extends PageRouteInfo<void> {
-  const PodcastDetailsRoute()
-      : super(
+class PodcastDetailsRoute extends PageRouteInfo<PodcastDetailsRouteArgs> {
+  PodcastDetailsRoute({
+    Key? key,
+    required PodcastModel podcast,
+  }) : super(
           PodcastDetailsRoute.name,
           path: '/podcasts/read',
+          args: PodcastDetailsRouteArgs(
+            key: key,
+            podcast: podcast,
+          ),
         );
 
   static const String name = 'PodcastDetailsRoute';
+}
+
+class PodcastDetailsRouteArgs {
+  const PodcastDetailsRouteArgs({
+    this.key,
+    required this.podcast,
+  });
+
+  final Key? key;
+
+  final PodcastModel podcast;
+
+  @override
+  String toString() {
+    return 'PodcastDetailsRouteArgs{key: $key, podcast: $podcast}';
+  }
 }
 
 /// generated route for

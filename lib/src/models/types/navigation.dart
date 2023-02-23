@@ -12,11 +12,11 @@ enum BottomNavigationItem {
   String get label => this == home
       ? "Acceuil"
       : this == music
-          ? "Podcasts"
+          ? "Talents"
           : this == video
-              ? "Vidéos"
+              ? "Informations"
               : this == blog
-                  ? "Newsletters"
+                  ? "Concepts"
                   : "Telechargements";
 
   String get path => this == home

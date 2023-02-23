@@ -26,23 +26,28 @@ class UserHomePage extends StatelessWidget {
         child: Column(
           children: [
             Image.asset('assets/images/home.png'),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(
+            //       horizontal: Dimens.doublePadding),
+            //   child: Text(
+            //     'Bienvenue',
+            //     style: Theme.of(context)
+            //         .textTheme
+            //         .headlineLarge!
+            //         .copyWith(color: AppColors.light().gold),
+            //   ),
+            // ),
+            const SizedBox(height: 5),
             Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: Dimens.doublePadding),
+              padding: const EdgeInsets.symmetric(horizontal: Dimens.padding),
               child: Text(
-                'Bienvenue',
+                AppTexts.welcome,
+                textAlign: TextAlign.justify,
                 style: Theme.of(context)
                     .textTheme
-                    .headlineLarge!
-                    .copyWith(color: AppColors.light().gold),
+                    .bodyMedium!
+                    .copyWith(color: Colors.black87),
               ),
-            ),
-            Text(
-              AppTexts.welcome,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium!
-                  .copyWith(color: Colors.black87),
             )
           ],
         ),

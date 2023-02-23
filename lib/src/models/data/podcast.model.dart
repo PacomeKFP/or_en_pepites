@@ -16,6 +16,12 @@ class PodcastModel {
     required this.description,
   });
 
+  factory PodcastModel.fromJson(Map<String, String> json) => PodcastModel(
+        url: json['url']!,
+        title: json['title']!,
+        description: json['description']!,
+      );
+
   Widget get view => StatefulBuilder(
       builder: (context, setState) => ListTile(
             title: Text(title),

@@ -16,14 +16,34 @@ class VideoItemComponent extends StatelessWidget {
     return InkWell(
       onTap: () => context.router.push(VideoDetailsRoute(video: video)),
       child: Card(
+        color: AppColors.light().gold.withOpacity(.2),
+        elevation: 16,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: Dimens.halfSpace),
-          // height: 300,
-          child: Column(
-            
-          )
-          
-
+          child: ListTile(
+            leading: Container(
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(Dimens.radius))),
+              child: Image.network(
+                video.thumbnails.mediumResUrl,
+              ),
+            ),
+            title: Text(
+              video.title,
+              style: GoogleFonts.roboto(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            subtitle: Text(
+              video.description,
+              overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.roboto(
+                fontSize: 11,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
         ),
       ),
     );
