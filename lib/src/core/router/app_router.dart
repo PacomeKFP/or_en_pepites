@@ -3,21 +3,19 @@ import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:or_en_pepite/src/logic/Authentication/authentication_bloc.dart';
 import 'package:or_en_pepite/src/models/models.dart';
-import 'package:or_en_pepite/src/services/Authentication/Auth.service.dart';
 import 'package:or_en_pepite/src/views/Auth/Auth.view.dart';
 import 'package:or_en_pepite/src/views/Blog/NewsDetails.dart';
 import 'package:or_en_pepite/src/views/Blog/NewsList.dart';
 import 'package:or_en_pepite/src/views/Downloads/Downloads.dart';
+import 'package:or_en_pepite/src/views/Favorites/Favorites.dart';
+import 'package:or_en_pepite/src/views/History/History.dart';
 import 'package:or_en_pepite/src/views/Home/Home.view.dart';
 import 'package:or_en_pepite/src/views/Music/MusicDetails.view.dart';
 import 'package:or_en_pepite/src/views/Music/MusicsList.view.dart';
 import 'package:or_en_pepite/src/views/Profile/UserProfile.view.dart';
 import 'package:or_en_pepite/src/views/Videos/VideoDetails.view.dart';
 import 'package:or_en_pepite/src/views/Videos/VideosList.view.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 part 'app_router.gr.dart';
 part 'app_router.guards.dart';
@@ -41,11 +39,12 @@ int trans() => Random().nextInt(transitions.length);
   routes: <CustomRoute>[
     /// pour l'authentification
     CustomRoute(
-        page: AuthenticationPage,
-        path: '/auth',
-        transitionsBuilder: TransitionsBuilders.zoomIn,),
+      page: AuthenticationPage,
+      path: '/auth',
+      transitionsBuilder: TransitionsBuilders.zoomIn,
+    ),
 
-    /// pour l'aceuil
+    /// pour l'accueil
     CustomRoute(
         guards: [CheckAuthState],
         page: UserHomePage,
@@ -71,7 +70,7 @@ int trans() => Random().nextInt(transitions.length);
     CustomRoute(
         guards: [CheckAuthState],
         page: PodcastDetailsPage,
-        path: '/podcasts/read',
+        path: '/podcasts/read/',
         transitionsBuilder: TransitionsBuilders.zoomIn),
 
     ///pour la liste des videos
@@ -85,14 +84,14 @@ int trans() => Random().nextInt(transitions.length);
     CustomRoute(
         guards: [CheckAuthState],
         page: VideoDetailsPage,
-        path: '/videos/watch',
+        path: '/videos/watch/',
         transitionsBuilder: TransitionsBuilders.zoomIn),
 
     ///pour la liste des newsletters
     CustomRoute(
         guards: [CheckAuthState],
         page: NewsLetterDetailsPage,
-        path: '/newsletters/read',
+        path: '/newsletters/read/',
         transitionsBuilder: TransitionsBuilders.slideBottom),
 
     ///Pour ecouter une newsletter
@@ -102,12 +101,27 @@ int trans() => Random().nextInt(transitions.length);
         path: '/newsletters',
         transitionsBuilder: TransitionsBuilders.zoomIn),
 
+// drawer Navigation
     // pour Ouvir la page de profil
     CustomRoute(
         guards: [CheckAuthState],
         page: UserProfilePage,
         path: '/account',
-        transitionsBuilder: TransitionsBuilders.slideRight)
+        transitionsBuilder: TransitionsBuilders.slideRight),
+
+    /// Pour consulter l'historique de navigation
+    CustomRoute(
+        guards: [CheckAuthState],
+        page: HistoryPage,
+        path: '/history',
+        transitionsBuilder: TransitionsBuilders.slideLeftWithFade),
+
+    /// Pour consulter la liste des favoris
+    CustomRoute(
+        guards: [CheckAuthState],
+        page: FavoritesPage,
+        path: '/favorite',
+        transitionsBuilder: TransitionsBuilders.slideLeftWithFade),
   ],
 )
 

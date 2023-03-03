@@ -41,9 +41,11 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     DownloadsRoute.name: (routeData) {
+      final args = routeData.argsAs<DownloadsRouteArgs>(
+          orElse: () => const DownloadsRouteArgs());
       return CustomPage<dynamic>(
         routeData: routeData,
-        child: const DownloadsPage(),
+        child: DownloadsPage(key: args.key),
         transitionsBuilder: TransitionsBuilders.slideLeft,
         opaque: true,
         barrierDismissible: false,
@@ -65,7 +67,6 @@ class _$AppRouter extends RootStackRouter {
         child: PodcastDetailsPage(
           key: args.key,
           podcast: args.podcast,
-          playerId: args.playerId,
         ),
         transitionsBuilder: TransitionsBuilders.zoomIn,
         opaque: true,
@@ -126,6 +127,28 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
+    HistoryRoute.name: (routeData) {
+      final args = routeData.argsAs<HistoryRouteArgs>(
+          orElse: () => const HistoryRouteArgs());
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: HistoryPage(key: args.key),
+        transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    FavoritesRoute.name: (routeData) {
+      final args = routeData.argsAs<FavoritesRouteArgs>(
+          orElse: () => const FavoritesRouteArgs());
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: FavoritesPage(key: args.key),
+        transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
   };
 
   @override
@@ -151,7 +174,7 @@ class _$AppRouter extends RootStackRouter {
         ),
         RouteConfig(
           PodcastDetailsRoute.name,
-          path: '/podcasts/read',
+          path: '/podcasts/read/',
           guards: [checkAuthState],
         ),
         RouteConfig(
@@ -161,12 +184,12 @@ class _$AppRouter extends RootStackRouter {
         ),
         RouteConfig(
           VideoDetailsRoute.name,
-          path: '/videos/watch',
+          path: '/videos/watch/',
           guards: [checkAuthState],
         ),
         RouteConfig(
           NewsLetterDetailsRoute.name,
-          path: '/newsletters/read',
+          path: '/newsletters/read/',
           guards: [checkAuthState],
         ),
         RouteConfig(
@@ -177,6 +200,16 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           UserProfileRoute.name,
           path: '/account',
+          guards: [checkAuthState],
+        ),
+        RouteConfig(
+          HistoryRoute.name,
+          path: '/history',
+          guards: [checkAuthState],
+        ),
+        RouteConfig(
+          FavoritesRoute.name,
+          path: '/favorite',
           guards: [checkAuthState],
         ),
       ];
@@ -208,14 +241,26 @@ class UserHomeRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [DownloadsPage]
-class DownloadsRoute extends PageRouteInfo<void> {
-  const DownloadsRoute()
+class DownloadsRoute extends PageRouteInfo<DownloadsRouteArgs> {
+  DownloadsRoute({Key? key})
       : super(
           DownloadsRoute.name,
           path: '/downloads',
+          args: DownloadsRouteArgs(key: key),
         );
 
   static const String name = 'DownloadsRoute';
+}
+
+class DownloadsRouteArgs {
+  const DownloadsRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'DownloadsRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
@@ -236,14 +281,12 @@ class PodcastDetailsRoute extends PageRouteInfo<PodcastDetailsRouteArgs> {
   PodcastDetailsRoute({
     Key? key,
     required PodcastModel podcast,
-    required String playerId,
   }) : super(
           PodcastDetailsRoute.name,
-          path: '/podcasts/read',
+          path: '/podcasts/read/',
           args: PodcastDetailsRouteArgs(
             key: key,
             podcast: podcast,
-            playerId: playerId,
           ),
         );
 
@@ -254,18 +297,15 @@ class PodcastDetailsRouteArgs {
   const PodcastDetailsRouteArgs({
     this.key,
     required this.podcast,
-    required this.playerId,
   });
 
   final Key? key;
 
   final PodcastModel podcast;
 
-  final String playerId;
-
   @override
   String toString() {
-    return 'PodcastDetailsRouteArgs{key: $key, podcast: $podcast, playerId: $playerId}';
+    return 'PodcastDetailsRouteArgs{key: $key, podcast: $podcast}';
   }
 }
 
@@ -286,10 +326,10 @@ class VideosListRoute extends PageRouteInfo<void> {
 class VideoDetailsRoute extends PageRouteInfo<VideoDetailsRouteArgs> {
   VideoDetailsRoute({
     Key? key,
-    required Video video,
+    required VideoModel video,
   }) : super(
           VideoDetailsRoute.name,
-          path: '/videos/watch',
+          path: '/videos/watch/',
           args: VideoDetailsRouteArgs(
             key: key,
             video: video,
@@ -307,7 +347,7 @@ class VideoDetailsRouteArgs {
 
   final Key? key;
 
-  final Video video;
+  final VideoModel video;
 
   @override
   String toString() {
@@ -324,7 +364,7 @@ class NewsLetterDetailsRoute extends PageRouteInfo<NewsLetterDetailsRouteArgs> {
     required String content,
   }) : super(
           NewsLetterDetailsRoute.name,
-          path: '/newsletters/read',
+          path: '/newsletters/read/',
           args: NewsLetterDetailsRouteArgs(
             key: key,
             title: title,
@@ -376,4 +416,52 @@ class UserProfileRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'UserProfileRoute';
+}
+
+/// generated route for
+/// [HistoryPage]
+class HistoryRoute extends PageRouteInfo<HistoryRouteArgs> {
+  HistoryRoute({Key? key})
+      : super(
+          HistoryRoute.name,
+          path: '/history',
+          args: HistoryRouteArgs(key: key),
+        );
+
+  static const String name = 'HistoryRoute';
+}
+
+class HistoryRouteArgs {
+  const HistoryRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'HistoryRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [FavoritesPage]
+class FavoritesRoute extends PageRouteInfo<FavoritesRouteArgs> {
+  FavoritesRoute({Key? key})
+      : super(
+          FavoritesRoute.name,
+          path: '/favorite',
+          args: FavoritesRouteArgs(key: key),
+        );
+
+  static const String name = 'FavoritesRoute';
+}
+
+class FavoritesRouteArgs {
+  const FavoritesRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'FavoritesRouteArgs{key: $key}';
+  }
 }

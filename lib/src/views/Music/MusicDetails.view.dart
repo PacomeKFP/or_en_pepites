@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:audioplayers/audioplayers.dart' as aud;
 import 'package:audioplayers/audioplayers.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -15,21 +14,19 @@ import 'Components/components/player_widget.dart';
 
 class PodcastDetailsPage extends StatefulWidget {
   final PodcastModel podcast;
-  final String playerId;
-  const PodcastDetailsPage(
-      {super.key, required this.podcast, required this.playerId});
+  const PodcastDetailsPage({super.key, required this.podcast});
 
   @override
   State<PodcastDetailsPage> createState() => _PodcastDetailsPageState();
 }
 
 class _PodcastDetailsPageState extends State<PodcastDetailsPage> {
-  late aud.AudioPlayer _player;
+  late AudioPlayer _player;
 
   @override
   void initState() {
     super.initState();
-    _player = aud.AudioPlayer(playerId: widget.playerId);
+    _player = AudioPlayer(playerId: widget.podcast.title);
   }
 
   @override
@@ -64,9 +61,17 @@ class _PodcastDetailsPageState extends State<PodcastDetailsPage> {
                 ),
                 const SizedBox(height: 10),
                 //TODO: ajouter la lecture ici
-
-                ///////////////////////////////////////////////
                 PlayerWidget(player: _player),
+
+                TextButton.icon(
+                  onPressed: () async => await widget.podcast
+                      .download()
+                      .then((value) => print("Podcast downloaded")),
+                  icon: Icon(Icons.download),
+                  label: const Text("Télécharger"),
+                ),
+                ///////////////////////////////////////////////
+
                 //on affiche la description du podcast
                 const SizedBox(height: 10),
                 Text(

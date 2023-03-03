@@ -29,15 +29,23 @@ class _PodcastItemComponentState extends State<PodcastItemComponent> {
   @override
   void initState() {
     super.initState();
-    _player = AudioPlayer();
-    _player.setSource(UrlSource(widget.podcast.url)).then((value) => null);
+    _player = AudioPlayer(playerId: widget.podcast.title);
+    _player
+        .setSource(widget.podcast.source == FileSource.local
+            ? DeviceFileSource(widget.podcast.path)
+            : UrlSource(widget.podcast.path))
+        .then((value) => null);
   }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => 
-          context.router.push(PodcastDetailsRoute(podcast: widget.podcast, playerId: _player.playerId)),
+      onTap: () async{ 
+        await widget.podcast.addToHistory();
+        context.router.push(
+        PodcastDetailsRoute(
+            podcast: widget.podcast),
+      );},
       child: Card(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(Dimens.radius)),

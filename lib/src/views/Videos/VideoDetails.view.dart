@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
+import 'package:or_en_pepite/src/models/models.dart';
 import 'package:or_en_pepite/src/utils/functions.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
@@ -11,7 +14,8 @@ import '../Components/BottomNavigationBar.dart';
 import '../Components/Drawer.dart';
 
 class VideoDetailsPage extends StatefulWidget {
-  final Video video;
+  final VideoModel video;
+  // final Map<String, String> videoJson;
   const VideoDetailsPage({super.key, required this.video});
 
   @override
@@ -19,26 +23,29 @@ class VideoDetailsPage extends StatefulWidget {
 }
 
 class _VideoDetailsPageState extends State<VideoDetailsPage> {
-  late VideoPlayerController _controller;
-
-  late YoutubePlayerController _controller2;
+  late VideoPlayerController _localVideoPlayerController;
+  late YoutubePlayerController _youtubePlayerController;
 
   @override
   void initState() {
     super.initState();
-    // _controller = VideoPlayerController.network(widget.video.url)
-    //   ..initialize().then((_) {
-    //     setState(() {});
-    //   });
-    _controller2 = YoutubePlayerController(
-      initialVideoId: "sPNWQzHHm88"
-    );
+    if (widget.video.source == FileSource.local) {
+      _localVideoPlayerController =
+          VideoPlayerController.file(File(widget.video.path))
+            ..initialize().then((_) {
+              setState(() {});
+            });
+    } else {
+      _youtubePlayerController =
+          YoutubePlayerController(initialVideoId: "sPNWQzHHm88");
+    }
   }
 
   @override
   void dispose() {
     super.dispose();
-    _controller2.dispose();
+    _youtubePlayerController.dispose();
+    _localVideoPlayerController.dispose();
   }
 
   @override
@@ -58,25 +65,26 @@ class _VideoDetailsPageState extends State<VideoDetailsPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // _controller.value.isInitialized
-              //     ? AspectRatio(
-              //         aspectRatio: _controller.value.aspectRatio,
-              //         child: VideoPlayer(_controller),
-              //       )
-              //     : CircularProgressIndicator(),
-
-              YoutubePlayer(
-                controller: _controller2,
-                showVideoProgressIndicator: true,
-                progressIndicatorColor: Colors.amber,
-                progressColors: const ProgressBarColors(
-                  playedColor: Colors.amber,
-                  handleColor: Colors.amberAccent,
-                ),
-                onReady: () {
-                  print('Player is ready.');
-                },
-              ),
+              widget.video.source == FileSource.local
+                  ? _localVideoPlayerController.value.isInitialized
+                      ? AspectRatio(
+                          aspectRatio:
+                              _localVideoPlayerController.value.aspectRatio,
+                          child: VideoPlayer(_localVideoPlayerController),
+                        )
+                      : CircularProgressIndicator()
+                  : YoutubePlayer(
+                      controller: _youtubePlayerController,
+                      showVideoProgressIndicator: true,
+                      progressIndicatorColor: Colors.amber,
+                      progressColors: const ProgressBarColors(
+                        playedColor: Colors.amber,
+                        handleColor: Colors.amberAccent,
+                      ),
+                      onReady: () {
+                        print('Player is ready.');
+                      },
+                    ),
               Text(
                 widget.video.title,
                 style: Theme.of(context)
@@ -90,6 +98,14 @@ class _VideoDetailsPageState extends State<VideoDetailsPage> {
           ),
         ),
       ),
+      floatingActionButton: widget.video.source == FileSource.network
+          ? FloatingActionButton(
+              onPressed: () async {
+                widget.video.download();
+              },
+              child: Icon(Icons.download, color: AppColors.light().gold),
+            )
+          : null,
     ));
   }
 }

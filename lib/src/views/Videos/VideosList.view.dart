@@ -52,8 +52,7 @@ class _VideosListPageState extends State<VideosListPage> {
                         continue display;
                       case ConnectionState.done:
                         if (snapshot.hasError) {
-                          child = Text(
-                              snapshot.error.toString());
+                          child = Text(snapshot.error.toString());
                           continue display;
                         }
                         if (!snapshot.hasData) {
@@ -67,9 +66,8 @@ class _VideosListPageState extends State<VideosListPage> {
                       display:
                       default:
                         return AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 300),
-                          child: child
-                        );
+                            duration: const Duration(milliseconds: 300),
+                            child: child);
                     }
                   },
                 ),

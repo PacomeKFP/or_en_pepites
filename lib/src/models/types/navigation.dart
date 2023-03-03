@@ -19,6 +19,22 @@ enum BottomNavigationItem {
                   ? "Concepts"
                   : "Telechargements";
 
+  BottomNavigationItem fromString(String str) {
+    switch (str) {
+      case 'video':
+      case 'videos':
+        return video;
+      case 'podcast':
+      case 'podcasts':
+        return music;
+      case 'newsletters':
+      case 'newsletter':
+        return blog;
+      default:
+        return music;
+    }
+  }
+
   String get path => this == home
       ? "/"
       : this == music
@@ -55,7 +71,7 @@ enum DrawerOptions {
   favorite,
   history;
 
-  String get path => this == account ? "/account" : "/home";
+  String get path => "/$name";
   String get label => this == account
       ? 'Mon compte'
       : this == favorite

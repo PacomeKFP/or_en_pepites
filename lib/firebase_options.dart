@@ -67,6 +67,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '766139655028',
     projectId: 'or-en-pepite',
     storageBucket: 'or-en-pepite.appspot.com',
+    androidClientId: '766139655028-4jcsh29c8dh1p2gokt4heabljlhrtvaq.apps.googleusercontent.com',
     iosClientId: '766139655028-re8mdnekk9t5klj03rcj4dp77fnolj8m.apps.googleusercontent.com',
     iosBundleId: 'com.example.orEnPepite',
   );
@@ -77,6 +78,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '766139655028',
     projectId: 'or-en-pepite',
     storageBucket: 'or-en-pepite.appspot.com',
+    androidClientId: '766139655028-4jcsh29c8dh1p2gokt4heabljlhrtvaq.apps.googleusercontent.com',
     iosClientId: '766139655028-re8mdnekk9t5klj03rcj4dp77fnolj8m.apps.googleusercontent.com',
     iosBundleId: 'com.example.orEnPepite',
   );

@@ -1,14 +1,9 @@
 import 'dart:convert';
-import 'dart:developer';
-import 'dart:io';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/models/models.dart';
 import 'package:or_en_pepite/src/services/Resources/manager.dart';
-import 'package:or_en_pepite/src/utils/functions.dart';
 
 import '../Components/AppBar.dart';
 import '../Components/BottomNavigationBar.dart';
@@ -16,18 +11,18 @@ import '../Components/Drawer.dart';
 import '../Components/PageViewComponent.dart';
 import '../Components/SliversNavigationComponent.dart';
 
-class DownloadsPage extends StatefulWidget {
-  DownloadsPage({super.key});
+class HistoryPage extends StatefulWidget {
+  HistoryPage({super.key});
 
   @override
-  State<DownloadsPage> createState() => DownloadsPageState();
+  State<HistoryPage> createState() => HistoryPageState();
 }
 
-class DownloadsPageState extends State<DownloadsPage> {
+class HistoryPageState extends State<HistoryPage> {
   Future _getData() async {
     try {
       DataManager dataManager = await DataManager.create();
-      var data = await dataManager.get(from: DataLocals.downloads);
+      var data = await dataManager.get(from: DataLocals.history);
 
       await dataManager.test(
           data: json.encode((data as Map).values.toList()),
@@ -47,9 +42,9 @@ class DownloadsPageState extends State<DownloadsPage> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: appBarComponent(context, "Téléchargements"),
+      appBar: appBarComponent(context, "Historique"),
       endDrawer: const DrawerComponent(),
-      bottomNavigationBar: const AppNavigation(currentIndex: 4),
+      bottomNavigationBar: const AppNavigation(currentIndex: 0),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -64,7 +59,7 @@ class DownloadsPageState extends State<DownloadsPage> {
                     Map? data = snapshot.data;
                     return snapshot.connectionState == ConnectionState.done &&
                             snapshot.hasData
-                        ? Container(
+                        ? SizedBox(
                             height: MediaQuery.of(context).size.height,
                             child: NestedScrollView(
                                 headerSliverBuilder:
@@ -76,7 +71,7 @@ class DownloadsPageState extends State<DownloadsPage> {
                                 body: PageViewComponent(
                                   controller: controller,
                                   data: data,
-                                  fileSource: FileSource.local,
+                                  fileSource: FileSource.network,
                                 )),
                           )
                         : const CircularProgressIndicator();

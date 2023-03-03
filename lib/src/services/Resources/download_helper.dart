@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:or_en_pepite/src/services/Resources/manager.dart';
 import 'package:or_en_pepite/src/services/Resources/notification.dart';
 import 'package:permission_handler/permission_handler.dart';
 // import 'package:youtube_downloader/models/notification.dart';
@@ -121,7 +122,12 @@ class DownloaderHelper {
             var stream = youtubeExplode.videos.streamsClient
                 .get(streamInfo.withHighestBitrate());
 
-            var directory = await createVideoDirectory();
+            // var directory = await createVideoDirectory();
+
+            // ===== MODIFICATION ===================
+            DataManager dataManager = await DataManager.create();
+            var directory = dataManager.video;
+            // ===== MODIFICATION ===================
             var file =
                 File("$directory/$name-${DateTime.now().millisecond}.mp4");
             var fileStream = file.openWrite(mode: FileMode.writeOnlyAppend);
@@ -153,6 +159,9 @@ class DownloaderHelper {
             await LocalNotificationService.showNotification(
                 title: "Video Downloaded !", body: name);
             print("Video Downloaded");
+
+//////////////////////===============ADDD
+            return file.path;
           } else {
             throw "Stream Info is Null";
           }

@@ -1,7 +1,6 @@
-import 'package:auto_route/auto_route.dart';
+
 import "package:flutter/material.dart";
 import 'package:or_en_pepite/src/core/configs/configs.dart';
-import 'package:or_en_pepite/src/utils/functions.dart';
 import 'package:or_en_pepite/src/views/Components/AppBar.dart';
 import 'package:or_en_pepite/src/views/Components/Drawer.dart';
 
@@ -26,17 +25,6 @@ class UserHomePage extends StatelessWidget {
         child: Column(
           children: [
             Image.asset('assets/images/home.png'),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(
-            //       horizontal: Dimens.doublePadding),
-            //   child: Text(
-            //     'Bienvenue',
-            //     style: Theme.of(context)
-            //         .textTheme
-            //         .headlineLarge!
-            //         .copyWith(color: AppColors.light().gold),
-            //   ),
-            // ),
             const SizedBox(height: 5),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: Dimens.padding),

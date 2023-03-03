@@ -21,7 +21,11 @@ class ResourcesServices {
       /// pour reccuperer les news letters distantes
   static Future<List<Map<String, String>>> geNewsLetters() async => [
         {
-          "title": "Newsletter 1",
+          "title": "Inceritudes: Antifragilité et authenticité",
+          "img1":"",
+          "p1":"paragraphe1",
+          "img2":"img2",
+          "p2":"",
           "content": AppTexts.newsletter1,
         }
       ];

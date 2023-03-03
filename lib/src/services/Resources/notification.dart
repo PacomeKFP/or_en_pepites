@@ -16,14 +16,13 @@ class LocalNotificationService {
 
   //Notification Details
   static Future<NotificationDetails> _notificationDetails() async {
-     AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('id', 'download',
-            channelDescription: 'channel_description',
+    AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails('id', 'download', "description ",
             importance: Importance.max,
             priority: Priority.max,
             playSound: true);
 
-    return const NotificationDetails(android: androidNotificationDetails);
+    return NotificationDetails(android: androidNotificationDetails);
   }
 
   //Show Notification
@@ -44,8 +43,8 @@ class LocalNotificationService {
     required String body,
   }) async {
     final AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('progress channel', 'progress channel',
-            channelDescription: 'progress channel description',
+        AndroidNotificationDetails('or_en_peptites', 'Telechargements',
+            "Notifications des téléchargements",
             channelShowBadge: false,
             importance: Importance.max,
             priority: Priority.high,

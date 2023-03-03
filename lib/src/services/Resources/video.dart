@@ -22,7 +22,7 @@ class VideoRessource extends ResourcesServices {
 
   static List<Future<Video>?> getVideos() {
     YoutubeExplode yt = YoutubeExplode();
-    List ids = ["https://youtu.be/sPNWQzHHm88"];
+    List ids = ["sPNWQzHHm88"];
     List<Future<Video>> res = ids.map((id) =>  yt.videos.get(id)).toList();
 
     print(res.length);

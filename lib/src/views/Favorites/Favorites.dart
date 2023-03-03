@@ -16,18 +16,18 @@ import '../Components/Drawer.dart';
 import '../Components/PageViewComponent.dart';
 import '../Components/SliversNavigationComponent.dart';
 
-class DownloadsPage extends StatefulWidget {
-  DownloadsPage({super.key});
+class FavoritesPage extends StatefulWidget {
+  FavoritesPage({super.key});
 
   @override
-  State<DownloadsPage> createState() => DownloadsPageState();
+  State<FavoritesPage> createState() => FavoritesPageState();
 }
 
-class DownloadsPageState extends State<DownloadsPage> {
+class FavoritesPageState extends State<FavoritesPage> {
   Future _getData() async {
     try {
       DataManager dataManager = await DataManager.create();
-      var data = await dataManager.get(from: DataLocals.downloads);
+      var data = await dataManager.get(from: DataLocals.favorites);
 
       await dataManager.test(
           data: json.encode((data as Map).values.toList()),
@@ -35,6 +35,7 @@ class DownloadsPageState extends State<DownloadsPage> {
 
       return data;
     } catch (e) {
+      print('err');
       print(e);
     }
   }
@@ -47,9 +48,9 @@ class DownloadsPageState extends State<DownloadsPage> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: appBarComponent(context, "Téléchargements"),
+      appBar: appBarComponent(context, "Favoris"),
       endDrawer: const DrawerComponent(),
-      bottomNavigationBar: const AppNavigation(currentIndex: 4),
+      bottomNavigationBar: const AppNavigation(currentIndex: 0),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -76,7 +77,7 @@ class DownloadsPageState extends State<DownloadsPage> {
                                 body: PageViewComponent(
                                   controller: controller,
                                   data: data,
-                                  fileSource: FileSource.local,
+                                  fileSource: FileSource.network,
                                 )),
                           )
                         : const CircularProgressIndicator();
