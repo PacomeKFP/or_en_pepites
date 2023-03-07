@@ -101,8 +101,7 @@ class _$AppRouter extends RootStackRouter {
         routeData: routeData,
         child: NewsLetterDetailsPage(
           key: args.key,
-          title: args.title,
-          content: args.content,
+          newsletter: args.newsletter,
         ),
         transitionsBuilder: TransitionsBuilders.slideBottom,
         opaque: true,
@@ -145,6 +144,17 @@ class _$AppRouter extends RootStackRouter {
         routeData: routeData,
         child: FavoritesPage(key: args.key),
         transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    AboutRoute.name: (routeData) {
+      final args = routeData.argsAs<AboutRouteArgs>(
+          orElse: () => const AboutRouteArgs());
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: AboutPage(key: args.key),
+        transitionsBuilder: TransitionsBuilders.slideRight,
         opaque: true,
         barrierDismissible: false,
       );
@@ -210,6 +220,11 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           FavoritesRoute.name,
           path: '/favorite',
+          guards: [checkAuthState],
+        ),
+        RouteConfig(
+          AboutRoute.name,
+          path: '/about',
           guards: [checkAuthState],
         ),
       ];
@@ -360,15 +375,13 @@ class VideoDetailsRouteArgs {
 class NewsLetterDetailsRoute extends PageRouteInfo<NewsLetterDetailsRouteArgs> {
   NewsLetterDetailsRoute({
     Key? key,
-    required String title,
-    required String content,
+    required NewsletterModel newsletter,
   }) : super(
           NewsLetterDetailsRoute.name,
           path: '/newsletters/read/',
           args: NewsLetterDetailsRouteArgs(
             key: key,
-            title: title,
-            content: content,
+            newsletter: newsletter,
           ),
         );
 
@@ -378,19 +391,16 @@ class NewsLetterDetailsRoute extends PageRouteInfo<NewsLetterDetailsRouteArgs> {
 class NewsLetterDetailsRouteArgs {
   const NewsLetterDetailsRouteArgs({
     this.key,
-    required this.title,
-    required this.content,
+    required this.newsletter,
   });
 
   final Key? key;
 
-  final String title;
-
-  final String content;
+  final NewsletterModel newsletter;
 
   @override
   String toString() {
-    return 'NewsLetterDetailsRouteArgs{key: $key, title: $title, content: $content}';
+    return 'NewsLetterDetailsRouteArgs{key: $key, newsletter: $newsletter}';
   }
 }
 
@@ -463,5 +473,29 @@ class FavoritesRouteArgs {
   @override
   String toString() {
     return 'FavoritesRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [AboutPage]
+class AboutRoute extends PageRouteInfo<AboutRouteArgs> {
+  AboutRoute({Key? key})
+      : super(
+          AboutRoute.name,
+          path: '/about',
+          args: AboutRouteArgs(key: key),
+        );
+
+  static const String name = 'AboutRoute';
+}
+
+class AboutRouteArgs {
+  const AboutRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'AboutRouteArgs{key: $key}';
   }
 }

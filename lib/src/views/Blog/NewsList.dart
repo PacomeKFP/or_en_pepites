@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:or_en_pepite/src/services/Resources/resources.dart';
 import 'package:or_en_pepite/src/views/Blog/Components/LetterItem.dart';
+import 'package:or_en_pepite/src/models/models.dart';
 
 import '../Components/AppBar.dart';
 import '../Components/BottomNavigationBar.dart';
@@ -47,9 +48,8 @@ class NewsLettersListPage extends StatelessWidget {
                   child = Column(
                     children: snapshot.data!
                         .map((newsletter) => LetterItem(
-                              title: newsletter['title']!,
-                              content: newsletter['content']!,
-                            ))
+                            newsletter:
+                                NewsletterModel.fromJson(json: newsletter)))
                         .toList(),
                   );
 

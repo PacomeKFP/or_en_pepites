@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 
@@ -11,6 +12,12 @@ class UserProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool display = true;
+    for (final providerProfile
+        in FirebaseAuth.instance.currentUser!.providerData) {
+      final String provider = providerProfile.providerId;
+      if (provider.contains('google')) display = false;
+    }
     return Scaffold(
       appBar: appBarComponent(context, "Mon Compte"),
       endDrawer: const DrawerComponent(),
@@ -33,11 +40,11 @@ class UserProfilePage extends StatelessWidget {
                         .copyWith(color: AppColors.light().gold),
                   ),
                 ),
-      
-      
-                const AccountsFields(),
+
+                AccountsFields(),
+
                 ///TODO: verifier le type d'auth:  SOCIAL ou EMAIL-PASS
-                const ChangePasswordComponent()
+                if (display) const ChangePasswordComponent()
               ],
             ),
           ),

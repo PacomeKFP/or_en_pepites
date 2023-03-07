@@ -4,31 +4,21 @@ import 'package:or_en_pepite/src/models/models.dart';
 import 'package:flutter/services.dart';
 
 class ResourcesServices {
-  /// To fetch al ressources from a location (local or remote)
-  static Future<Map<String, dynamic>?> getRessources(
-      ResourceLocation resourceLocation) async {
-    var resssource = await rootBundle.loadString(resourceLocation.path);
-    return json.decode(resssource) as Map<String, dynamic>?;
-  }
 
-  /// pour ajouter une ressource aux favoris
-  addToFavorite(ResourceType resourceType, resource) {}
-
-    /// pour reccuperer tous les id de videos
+  /// pour reccuperer tous les id de videos
   static Future<List<String>> getVideosIds() async =>
       ["https://youtu.be/sPNWQzHHm88"];
 
-      /// pour reccuperer les news letters distantes
-  static Future<List<Map<String, String>>> geNewsLetters() async => [
+  /// pour reccuperer les news letters distantes
+  static Future<List<Map<String, dynamic>>> geNewsLetters() async => [
         {
-          "title": "Inceritudes: Antifragilité et authenticité",
-          "img1":"",
-          "p1":"paragraphe1",
-          "img2":"img2",
-          "p2":"",
-          "content": AppTexts.newsletter1,
+          "id": "1",
+          "title": "Incertititudes: Antifragilité et Authenticité.",
+          "images": [
+            "assets/images/newsletter0.png",
+            "assets/images/newsletter1.png"
+          ],
+          "paragraphs": AppTexts.newsletter1
         }
       ];
-
-   
 }

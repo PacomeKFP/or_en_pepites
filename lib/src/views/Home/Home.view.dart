@@ -1,8 +1,8 @@
-
 import "package:flutter/material.dart";
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/views/Components/AppBar.dart';
 import 'package:or_en_pepite/src/views/Components/Drawer.dart';
+import 'package:or_en_pepite/src/views/Components/ImageComponent.dart';
 
 import '../Components/BottomNavigationBar.dart';
 
@@ -15,30 +15,49 @@ class UserHomePage extends StatelessWidget {
       appBar: appBarComponent(context, "Accueil"),
       endDrawer: const DrawerComponent(),
       bottomNavigationBar: const AppNavigation(
-    currentIndex: 0,
+        currentIndex: 0,
       ),
       body: SafeArea(
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Image.asset('assets/images/home.png'),
-            const SizedBox(height: 5),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: Dimens.padding),
-              child: Text(
-                AppTexts.welcome,
-                textAlign: TextAlign.justify,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Colors.black87),
+            child: Column(
+              children: List<Widget>.generate(
+                AppTexts.welcome.length,
+                (index) => Column(
+                  children: [
+                    ImageComponent(path: "assets/images/home$index.png"),
+                    if (index == 0)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: Dimens.oneHalfPadding,
+                            horizontal: Dimens.doublePadding),
+                        child: Text(
+                          AppTexts.welcomeTitle,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(color: AppColors.light().gold),
+                        ),
+                      ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: Dimens.padding,
+                          vertical: Dimens.halfPadding),
+                      child: Text(
+                        AppTexts.welcome[index],
+                        textAlign: TextAlign.justify,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: Colors.black87),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            )
-          ],
-        ),
+            ),
           ),
         ),
       ),

@@ -29,6 +29,7 @@ class DataManager {
   static Future<DataManager> create() async {
     ///dossier tmp par defaut pour l'app
     final dir = await getTemporaryDirectory();
+    final secDir = await getApplicationDocumentsDirectory();
 
     ///Dossier pour les fichiers audio
     final image = Directory(join(dir.path, 'image'));
@@ -41,6 +42,10 @@ class DataManager {
     ///Dossier pour les ficiers videos
     final video = Directory(join(dir.path, 'video'));
     if (!(await video.exists())) video.create();
+
+    ///Fichier de base de donnée de l'application
+    final logs = File(join(dir.path, 'logs.txt'));
+    if (!(await logs.exists())) logs.create();
 
     ///Fichier de base de donnée de l'application
     final data = File(join(dir.path, 'data.json'));
@@ -117,15 +122,15 @@ class DataManager {
   /// [type]: peut prendre les valeurs {videos, podcasts, newsletters}
   Future<void> addTo({
     DataLocals to = DataLocals.history,
-    required Map<String, String> item,
+    required Map<String, dynamic> item,
     required DataType type,
   }) async {
     File dataFile = File(data);
     Map<String, dynamic> dataContent =
         json.decode((await dataFile.readAsString()));
     //Si l'element est deja en fav, alors plus besoin de le refaire
-    if (dataContent[to.key][type.key].contains(item)) dataContent[to.key][type.key].remove(item);
-    //Sinon on l'ajoute en fav
+    if (dataContent[to.key][type.key].contains(item))
+      dataContent[to.key][type.key].remove(item);
     dataContent[to.key][type.key].add(item);
     //et on modifier le fichier de db
     dataFile.writeAsString(json.encode(dataContent));
@@ -146,7 +151,7 @@ class DataManager {
 
       var a = (await json.decode(await dataFile.readAsString()));
 
-      await test(data :await dataFile.readAsString());
+      await test(data: await dataFile.readAsString());
 
       var dataContent = a;
 // print('papa');
@@ -160,7 +165,8 @@ class DataManager {
     }
   }
 
-  Future<void> test({required String data, String fileName = "data.json"}) async {
+  Future<void> test(
+      {required String data, String fileName = "data.json"}) async {
     var status = Permission.manageExternalStorage.status;
     if (await status.isDenied) {
       Permission.manageExternalStorage.request();
@@ -179,4 +185,14 @@ class DataManager {
 
     return dataContent;
   }
+
+  Future logThis({required String title, LogType type = LogType.error, required item }) async {}
+}
+
+enum LogType {
+  info,
+  debug,
+  error;
+
+
 }

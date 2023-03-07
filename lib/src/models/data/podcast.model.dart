@@ -1,77 +1,48 @@
 part of models;
 
-class PodcastModel extends DataModel {
+class PodcastModel extends Downloadable {
+  final FileSource source;
+
   PodcastModel._internal(
       {required super.path,
-      required super.title,
+      required super.shareLink,
       required super.description,
-      super.shareLink,
-      super.source});
+      required super.id,
+      required super.title,
+      required this.source});
 
   factory PodcastModel.fromJson(
-          {required Map<String, String> json,
+          {required Map<String, dynamic> json,
           FileSource source = FileSource.network}) =>
       PodcastModel._internal(
-          description: json['description']!,
-          path: json['path']!,
-          title: json['title']!,
-          shareLink: json['shareLink']!,
+          path: json['path'],
+          shareLink: json['shareLink'],
+          description: json['description'],
+          id: json['id'],
+          title: json['title'],
           source: source);
-  @override
-  PageRouteInfo pageRoute() => PodcastDetailsRoute(podcast: this);
 
   @override
-  Future<void> addToFavorite() async {
-    // create a dataManager Object
-    DataManager dataManager = await DataManager.create();
-    // adding it to the fav list
-    await dataManager.addTo(
-        to: DataLocals.favorites, item: toJson(), type: DataType.podcast);
-  }
+  DataType get dataType => DataType.podcast;
 
   @override
-  Future<void> addToHistory() async {
-    DataManager dataManager = await DataManager.create();
-    await dataManager.addTo(item: toJson(), type: DataType.podcast);
-  }
+  PageRouteInfo get pageRoute => PodcastDetailsRoute(podcast: this);
 
   @override
   Future<void> download() async {
-    /// it will give the path to the store-dir
-    DataManager dataManager = await DataManager.create();
-
-    Dio dio = Dio();
+    if (source == FileSource.local) {
+      return print('The file is already on the internal storage');
+    }
     try {
-      //path to audio files
-      var dir = Directory(dataManager.audio);
-      if (!(await dir.exists())) dir.create();
-      String filePath = "$dir/$title.mp3";
-      await dio
-          .download(
-            path,
-            filePath,
-            onReceiveProgress: (rec, total) {
-              print("Rec: $rec , Total: $total");
-               LocalNotificationService.showProgressNotification(
-                progrss: (rec*100/total).ceil(),
-                maxProgress: 100,
-                title: "Téléchargement en cours...",
-                body: title,
-              );
-            },
-          )
-          .then((value) => print("Download ends \n\t--> $value"))
-          .onError((error, stackTrace) async => await dataManager.test(
-              data: json.encode(error), fileName: "DownloadError.json"));
-      
-      await dataManager.addTo(
-          to: DataLocals.downloads,
-          item: toJson()
-            ..update('path', (value) => filePath, ifAbsent: () => filePath),
-          type: DataType.podcast);
+      DataManager dataManager = await DataManager.create();
+      Dio dio = Dio();
+      String filePath = join(dataManager.audio, "$title.mp3");
+      await dio.download(path, filePath,
+          onReceiveProgress: (count, total) =>
+              print("Received: $count on $total"),
+          options: Options(receiveTimeout: const Duration(minutes: 2)));
 
-      await LocalNotificationService.showNotification(
-                title: "Talent Télechargé !", body: title);
+      await addToDownloads(localFilePath: filePath);
     } catch (e) {
       print(e);
     }

@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:or_en_pepite/src/models/models.dart';
+import 'package:or_en_pepite/src/views/About/About.view.dart';
 import 'package:or_en_pepite/src/views/Auth/Auth.view.dart';
 import 'package:or_en_pepite/src/views/Blog/NewsDetails.dart';
 import 'package:or_en_pepite/src/views/Blog/NewsList.dart';
@@ -122,6 +123,13 @@ int trans() => Random().nextInt(transitions.length);
         page: FavoritesPage,
         path: '/favorite',
         transitionsBuilder: TransitionsBuilders.slideLeftWithFade),
+
+    /// Pour la page À propos
+    CustomRoute(
+        guards: [CheckAuthState],
+        page: AboutPage,
+        path: '/about',
+        transitionsBuilder: TransitionsBuilders.slideRight),
   ],
 )
 

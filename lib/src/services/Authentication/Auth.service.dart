@@ -18,8 +18,11 @@ class AuthenticationService {
 
   void logout() async => await FirebaseAuth.instance.signOut();
 
-  Future<UserCredential?>  authenticateUser(AuthType authType, AuthMethod authMethod,
-      Map<String, String>? data, List<String> errors) async {
+  Future<UserCredential?> authenticateUser(
+      AuthType authType,
+      AuthMethod authMethod,
+      Map<String, String>? data,
+      List<String> errors) async {
     errors = [];
 
     if (authMethod == AuthMethod.google) {
@@ -33,6 +36,26 @@ class AuthenticationService {
     }
     if (authType == AuthType.login) {
       return await emailPasswordLogin(errors, data!);
+    }
+  }
+
+  static Future<bool> updateUserName(String newName) async {
+    try {
+      await FirebaseAuth.instance.currentUser!.updateDisplayName(newName);
+      await FirebaseAuth.instance.currentUser!.reload();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  static Future<bool> updateUserPassword(String newName) async {
+    try {
+      await FirebaseAuth.instance.currentUser!.updatePassword(newName);
+      await FirebaseAuth.instance.currentUser!.reload();
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 }

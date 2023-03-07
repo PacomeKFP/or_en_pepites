@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
+import 'package:or_en_pepite/src/services/Authentication/Auth.service.dart';
 import 'package:or_en_pepite/src/views/Components/TextFormField.dart';
 
 class ChangePasswordComponent extends StatefulWidget {
@@ -26,11 +27,10 @@ class _ChangePasswordComponentState extends State<ChangePasswordComponent> {
               title: const Text('Modification de mot de passe'),
               content: Form(
                 key: _formKey,
-                child: Container(
+                child: SizedBox(
                   height: 180,
                   child: Column(
                     children: [
-                      
                       ...[0, 1]
                           .map((i) => CustomTextField(
                                 controller: controllers[i],
@@ -38,6 +38,9 @@ class _ChangePasswordComponentState extends State<ChangePasswordComponent> {
                                 placedholder: labels[i],
                                 icon: Icons.key_sharp,
                                 isObscurable: true,
+                                validators: [
+                                  (v) => controllers[0] == controllers[1]
+                                ],
                               ))
                           .toList(),
                       const SizedBox(height: 10),
@@ -47,7 +50,20 @@ class _ChangePasswordComponentState extends State<ChangePasswordComponent> {
               ),
               actions: [
                 OutlinedButton.icon(
-                  onPressed: () => debugPrint('ValidateForm'),
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      await AuthenticationService.updateUserPassword(
+                              controllers[0].text)
+                          .then((value) => ScaffoldMessenger.of(context)
+                              .showSnackBar(SnackBar(
+                                  content: Text(value
+                                      ? "Données mises à jour avec success"
+                                      : "Une erreur est survenue veuillez vérifer votre connexion internet, puis reéssayez"))));
+                    }
+
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("Les mots de passe ne concordent pas.")));
+                  },
                   icon: const Icon(
                     Icons.check,
                     color: Colors.lightGreenAccent,

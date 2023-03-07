@@ -1,6 +1,11 @@
+import 'dart:math';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/core/router/app_router.dart';
+import 'package:or_en_pepite/src/logic/blocs.dart';
 import 'package:or_en_pepite/src/models/models.dart';
 import 'package:or_en_pepite/src/views/Music/MusicDetails.view.dart';
 
@@ -9,7 +14,10 @@ class PageViewComponent extends StatefulWidget {
   final Map? data;
   final FileSource fileSource;
   const PageViewComponent(
-      {super.key, required this.controller, required this.data, required this.fileSource});
+      {super.key,
+      required this.controller,
+      required this.data,
+      required this.fileSource});
 
   @override
   State<PageViewComponent> createState() => _PageViewComponentState();
@@ -19,27 +27,51 @@ class _PageViewComponentState extends State<PageViewComponent> {
   @override
   Widget build(BuildContext context) {
     return PageView(
-      physics: NeverScrollableScrollPhysics(),
+      // physics: NeverScrollableScrollPhysics(),
+      onPageChanged: (int page) =>
+          context.read<TabsManagerBloc>().add(MoveToPage(nextPage: page)),
       controller: widget.controller,
       children: widget.data!.entries.toList().map((MapEntry entry) {
         var dataType = entry.value;
         var key = entry.key;
         if ([null, []].contains(dataType as List) ||
             (dataType as List).isEmpty) {
-          return Text('Aucun donnée disponible');
+          return Text('Aucune donnée disponible');
         }
 
         return SingleChildScrollView(
           child: Column(
             children: (dataType)
                 .map((data) => InkWell(
-                      onTap: () async {
-                        DataModel dataModel = DataModel.fromEntry(
-                            MapEntry(entry.key,
-                                (data as Map).cast<String, String>()),
-                            widget.fileSource);
-                        await context.router.push(dataModel.pageRoute());
-                      },
+                    onTap: () async {
+                      DataModel dataModel = DataModel.fromEntry(
+                          MapEntry(
+                              entry.key, (data as Map).cast<String, String>()),
+                          widget.fileSource);
+                      await context.router.push(dataModel.pageRoute);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: Dimens.doubleSpace,
+                          vertical: Dimens.oneHalfPadding),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: Dimens.padding,
+                          vertical: Dimens.halfPadding),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.light().gold.withOpacity(0.2),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(Dimens.radius),
+                        color: AppColors.light()
+                            .gold
+                            .withOpacity(Random().nextInt(75) / 100 + .05),
+                      ),
                       child: ListTile(
                         title: Text(data['title'].toString()),
                         subtitle: Text(
@@ -48,7 +80,7 @@ class _PageViewComponentState extends State<PageViewComponent> {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                    ))
+                    )))
                 .toList(),
           ),
         );

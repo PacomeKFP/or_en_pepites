@@ -98,26 +98,26 @@ class DrawerComponent extends StatelessWidget {
           ),
           const SizedBox(height: 50),
 
-          //application info
-          AboutListTile(
-            icon: const Icon(
-              Icons.info,
-            ),
-            applicationIcon: const Icon(
-              Icons.local_play,
-            ),
-            applicationName: AppStrings.appName,
-            applicationVersion: '0.0.01',
-            aboutBoxChildren: const [],
-            applicationLegalese: '© 2023 Company',
-            child: Text(
-              "À propos...",
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium!
-                  .copyWith(color: AppColors.light().gold),
-            ),
-          ),
+          // //application info
+          // AboutListTile(
+          //   icon: const Icon(
+          //     Icons.info,
+          //   ),
+          //   applicationIcon: const Icon(
+          //     Icons.local_play,
+          //   ),
+          //   applicationName: AppStrings.appName,
+          //   applicationVersion: '0.0.01',
+          //   aboutBoxChildren: const [],
+          //   applicationLegalese: '© 2023 Company',
+          //   child: Text(
+          //     "À propos...",
+          //     style: Theme.of(context)
+          //         .textTheme
+          //         .titleMedium!
+          //         .copyWith(color: AppColors.light().gold),
+          //   ),
+          // ),
         ],
       ),
     );

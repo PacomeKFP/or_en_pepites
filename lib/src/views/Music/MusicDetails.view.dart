@@ -26,7 +26,11 @@ class _PodcastDetailsPageState extends State<PodcastDetailsPage> {
   @override
   void initState() {
     super.initState();
+
     _player = AudioPlayer(playerId: widget.podcast.title);
+    if (widget.podcast.source == FileSource.network) {
+      _player.setSourceDeviceFile(widget.podcast.path);
+    }
   }
 
   @override
@@ -62,14 +66,12 @@ class _PodcastDetailsPageState extends State<PodcastDetailsPage> {
                 const SizedBox(height: 10),
                 //TODO: ajouter la lecture ici
                 PlayerWidget(player: _player),
-
-                TextButton.icon(
-                  onPressed: () async => await widget.podcast
-                      .download()
-                      .then((value) => print("Podcast downloaded")),
-                  icon: Icon(Icons.download),
-                  label: const Text("Télécharger"),
-                ),
+                if (widget.podcast.source == FileSource.network)
+                  TextButton.icon(
+                    onPressed: () async => await _download(context),
+                    icon: const Icon(Icons.download),
+                    label: const Text("Télécharger"),
+                  ),
                 ///////////////////////////////////////////////
 
                 //on affiche la description du podcast
@@ -84,20 +86,51 @@ class _PodcastDetailsPageState extends State<PodcastDetailsPage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            _player.state == PlayerState.playing
-                ? _player.pause()
-                : _player.resume();
-          });
-        },
-        child: Icon(
-          _player.state == PlayerState.playing ? Icons.pause : Icons.play_arrow,
-        ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+
+          if (widget.podcast.source == FileSource.network)
+            FloatingActionButton(
+              onPressed: () async => await _download(context),
+              child: Icon(
+                Icons.download,
+                color: AppColors.light().gold,
+              ),
+            ),
+          FloatingActionButton(
+            onPressed: () async {
+              await widget.podcast.addToFavorites();
+            },
+            child: Icon(
+              Icons.favorite,
+              color: AppColors.light().gold,
+            ),
+          ),
+          FloatingActionButton(
+            onPressed: () {
+              setState(() {
+                _player.state == PlayerState.playing
+                    ? _player.pause()
+                    : _player.resume();
+              });
+            },
+            child: Icon(
+              _player.state == PlayerState.playing
+                  ? Icons.pause
+                  : Icons.play_arrow,
+            ),
+          ),
+        ],
       ),
     );
   }
+
+  _download(context) async => await widget.podcast.download().then((value) =>
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Votre podcast a bien été téléchargé, ils era desormais disponible hors ligne'))));
 }
 
 /*

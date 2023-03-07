@@ -69,17 +69,20 @@ enum BottomNavigationItem {
 enum DrawerOptions {
   account,
   favorite,
-  history;
+  history,
+  about;
 
   String get path => "/$name";
   String get label => this == account
       ? 'Mon compte'
       : this == favorite
           ? 'Favoris'
-          : 'Historique';
+          : this == history
+              ? 'Historique'
+              : "À propos";
   IconData get icon => this == account
       ? Icons.account_circle_sharp
       : this == favorite
           ? Icons.favorite
-          : Icons.history;
+          : this==history? Icons.history: Icons.info_outlined;
 }

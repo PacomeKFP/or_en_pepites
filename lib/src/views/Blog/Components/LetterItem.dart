@@ -6,22 +6,19 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
+import 'package:or_en_pepite/src/models/models.dart';
 import 'package:or_en_pepite/src/core/router/app_router.dart';
 
 import '../NewsDetails.dart';
 
 class LetterItem extends StatelessWidget {
-  final String title;
-  final String content;
-  const LetterItem({super.key, required this.title, required this.content});
+  final NewsletterModel newsletter;
+  const LetterItem({super.key, required this.newsletter});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => context.router.push(NewsLetterDetailsRoute(
-        title: title,
-        content: content,
-      )),
+      onTap: () => context.router.push(NewsLetterDetailsRoute(newsletter: newsletter)),
       child: Container(
         padding: const EdgeInsets.symmetric(
             horizontal: Dimens.doubleSpace, vertical: Dimens.oneHalfPadding),
@@ -42,7 +39,10 @@ class LetterItem extends StatelessWidget {
               .gold
               .withOpacity(Random().nextInt(75) / 100 + .05),
         ),
-        child: Text(title, style: GoogleFonts.quicksand(fontWeight: FontWeight.bold),),
+        child: Text(
+          newsletter.title,
+          style: GoogleFonts.quicksand(fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }

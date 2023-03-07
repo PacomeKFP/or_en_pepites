@@ -5,14 +5,17 @@ import 'configs/configs.dart';
 import 'router/app_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Application extends StatelessWidget {  
+class Application extends StatelessWidget {
   final _appRouter = AppRouter(checkAuthState: CheckAuthState());
   Application({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => AuthenticationBloc(),
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => AuthenticationBloc()),
+          BlocProvider(create: (context) => TabsManagerBloc()),
+        ],
         child: MaterialApp.router(
           routerDelegate: _appRouter.delegate(),
           routeInformationParser: _appRouter.defaultRouteParser(),

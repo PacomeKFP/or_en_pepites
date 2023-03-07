@@ -6,7 +6,7 @@ class AppTheme {
     var baseTheme = _buildTextTheme(colors: colors);
     return ThemeData(
       brightness: brightness,
-      scaffoldBackgroundColor: colors.background,
+      // scaffoldBackgroundColor: colors.background,
       textTheme: GoogleFonts.poppinsTextTheme(baseTheme),
       appBarTheme: AppBarTheme(
         elevation: 0,

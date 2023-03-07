@@ -44,6 +44,8 @@ class _VideoDetailsPageState extends State<VideoDetailsPage> {
   @override
   void dispose() {
     super.dispose();
+    _youtubePlayerController.pause();
+    _youtubePlayerController.reset();
     _youtubePlayerController.dispose();
     _localVideoPlayerController.dispose();
   }
@@ -101,9 +103,9 @@ class _VideoDetailsPageState extends State<VideoDetailsPage> {
       floatingActionButton: widget.video.source == FileSource.network
           ? FloatingActionButton(
               onPressed: () async {
-                widget.video.download();
+                await widget.video.addToFavorites();
               },
-              child: Icon(Icons.download, color: AppColors.light().gold),
+              child: Icon(Icons.favorite, color: AppColors.light().gold),
             )
           : null,
     ));
