@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
+import 'package:or_en_pepite/src/models/types/navigation.dart';
 import 'package:or_en_pepite/src/services/Resources/video.dart';
 import 'package:or_en_pepite/src/views/Videos/Components/VideoItemComponent.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
@@ -24,9 +25,8 @@ class _VideosListPageState extends State<VideosListPage> {
         child: Scaffold(
       appBar: appBarComponent(context, "Informations en Pépites "),
       endDrawer: const DrawerComponent(),
-      bottomNavigationBar: const AppNavigation(
-        currentIndex: 2,
-      ),
+            bottomNavigationBar: AppNavigation(currentIndex: BottomNavigationItem.video.index),
+
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,

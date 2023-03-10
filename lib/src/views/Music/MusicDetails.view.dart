@@ -1,11 +1,8 @@
-import 'dart:async';
-
 import 'package:audioplayers/audioplayers.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/models/models.dart';
-import 'package:or_en_pepite/src/utils/functions.dart';
+import 'package:or_en_pepite/src/models/types/navigation.dart';
 
 import '../Components/AppBar.dart';
 import '../Components/BottomNavigationBar.dart';
@@ -34,9 +31,9 @@ class _PodcastDetailsPageState extends State<PodcastDetailsPage> {
   }
 
   @override
-  void dispose() {
+  Future<void> dispose() async {
+    await _player.stop();
     super.dispose();
-    _player.dispose();
   }
 
   @override
@@ -44,9 +41,8 @@ class _PodcastDetailsPageState extends State<PodcastDetailsPage> {
     return Scaffold(
       appBar: appBarComponent(context, "Talents en Pépites"),
       endDrawer: const DrawerComponent(),
-      bottomNavigationBar: const AppNavigation(
-        currentIndex: 1,
-      ),
+      bottomNavigationBar:
+          AppNavigation(currentIndex: BottomNavigationItem.music.index),
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -64,7 +60,8 @@ class _PodcastDetailsPageState extends State<PodcastDetailsPage> {
                       .copyWith(color: AppColors.light().gold),
                 ),
                 const SizedBox(height: 10),
-                //TODO: ajouter la lecture ici
+
+                ///Widget de lecture
                 PlayerWidget(player: _player),
                 if (widget.podcast.source == FileSource.network)
                   TextButton.icon(
@@ -90,7 +87,6 @@ class _PodcastDetailsPageState extends State<PodcastDetailsPage> {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-
           if (widget.podcast.source == FileSource.network)
             FloatingActionButton(
               onPressed: () async => await _download(context),
@@ -127,8 +123,14 @@ class _PodcastDetailsPageState extends State<PodcastDetailsPage> {
     );
   }
 
-  _download(context) async => await widget.podcast.download().then((value) =>
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+  _download(context) async =>
+      await widget.podcast.download(callback: (percent) {
+        ScaffoldMessenger.of(context).removeCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Le podcast a été téléchargé à $percent%'))
+        );
+        
+      }).then((value) => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
               'Votre podcast a bien été téléchargé, ils era desormais disponible hors ligne'))));
 }

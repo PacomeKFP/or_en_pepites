@@ -1,12 +1,9 @@
 library auth.service;
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:or_en_pepite/src/models/models.dart';
-
-import 'dart:developer';
 
 part 'src/emailLogin.service.dart';
 part 'src/emailRegister.service.dart';
@@ -37,6 +34,8 @@ class AuthenticationService {
     if (authType == AuthType.login) {
       return await emailPasswordLogin(errors, data!);
     }
+
+    return null;
   }
 
   static Future<bool> updateUserName(String newName) async {

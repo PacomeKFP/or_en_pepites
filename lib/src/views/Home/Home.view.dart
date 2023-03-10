@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
+import 'package:google_fonts/google_fonts.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
+import 'package:or_en_pepite/src/models/types/navigation.dart';
 import 'package:or_en_pepite/src/views/Components/AppBar.dart';
 import 'package:or_en_pepite/src/views/Components/Drawer.dart';
 import 'package:or_en_pepite/src/views/Components/ImageComponent.dart';
@@ -14,9 +16,8 @@ class UserHomePage extends StatelessWidget {
     return Scaffold(
       appBar: appBarComponent(context, "Accueil"),
       endDrawer: const DrawerComponent(),
-      bottomNavigationBar: const AppNavigation(
-        currentIndex: 0,
-      ),
+            bottomNavigationBar: AppNavigation(currentIndex: BottomNavigationItem.home.index),
+
       body: SafeArea(
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
@@ -35,10 +36,8 @@ class UserHomePage extends StatelessWidget {
                             horizontal: Dimens.doublePadding),
                         child: Text(
                           AppTexts.welcomeTitle,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge!
-                              .copyWith(color: AppColors.light().gold),
+                          style: GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme)
+                              .titleLarge!.copyWith(color: AppColors.light().gold),
                         ),
                       ),
                     Padding(

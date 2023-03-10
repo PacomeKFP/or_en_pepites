@@ -5,9 +5,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/core/router/app_router.dart';
 import 'package:or_en_pepite/src/models/models.dart';
-import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:video_player/video_player.dart';
 
 class PodcastItemComponent extends StatefulWidget {
   final PodcastModel podcast;
@@ -38,14 +36,24 @@ class _PodcastItemComponentState extends State<PodcastItemComponent> {
   }
 
   @override
+  Future<void> dispose() async {
+    await _player.stop();
+    // await _player.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () async{ 
-        await widget.podcast.addToHistory();
-        context.router.push(
-        PodcastDetailsRoute(
-            podcast: widget.podcast),
-      );},
+      onTap: () async {
+        await widget.podcast.addToHistory().then(
+              (value) => context.router.replace(
+                PodcastDetailsRoute(podcast: widget.podcast),
+              ),
+            );
+
+          // context.router.replace(route)
+      },
       child: Card(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(Dimens.radius)),

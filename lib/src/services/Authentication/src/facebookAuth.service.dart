@@ -14,11 +14,6 @@ Future<UserCredential?> signInWithFacebook(List<String> errors) async {
         .signInWithCredential(facebookAuthCredential);
   } catch (e) {
     errors.add(e.toString());
-    print('\n\n\n\n');
-    print('=================Facebook Sign Error - Start =====================');
-    print(e);
-    print('=================Facebook Sign Error - End =======================');
-    print('\n\n\n\n');
     return null;
   }
 }

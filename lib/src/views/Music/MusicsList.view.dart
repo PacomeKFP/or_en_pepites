@@ -1,8 +1,7 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
+import 'package:or_en_pepite/src/models/types/navigation.dart';
 import 'package:or_en_pepite/src/services/Resources/podcast.dart';
-import 'package:or_en_pepite/src/utils/functions.dart';
 
 import '../Components/AppBar.dart';
 import '../Components/BottomNavigationBar.dart';
@@ -12,15 +11,16 @@ import 'Components/PodcastItemComponent.dart';
 class PodcastsListPage extends StatelessWidget {
   const PodcastsListPage({super.key});
 
+  
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
       appBar: appBarComponent(context, "Talents en Pépites"),
       endDrawer: const DrawerComponent(),
-      bottomNavigationBar: const AppNavigation(
-        currentIndex: 1,
-      ),
+            bottomNavigationBar: AppNavigation(currentIndex: BottomNavigationItem.music.index),
+
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
+import 'package:or_en_pepite/src/models/types/navigation.dart';
 
 import '../Components/AppBar.dart';
 import '../Components/BottomNavigationBar.dart';
@@ -9,7 +10,6 @@ import '../Components/Drawer.dart';
 class AboutPage extends StatelessWidget {
   AboutPage({super.key});
 
-  bool refsIsOn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class AboutPage extends StatelessWidget {
       child: Scaffold(
         appBar: appBarComponent(context, "À Propos"),
         endDrawer: const DrawerComponent(),
-        bottomNavigationBar: const AppNavigation(currentIndex: 0),
+      bottomNavigationBar: AppNavigation(currentIndex: BottomNavigationItem.home.index),
         body: SizedBox(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
@@ -40,44 +40,7 @@ class AboutPage extends StatelessWidget {
                     const Text(
                         "Podcast\nNewsletter\nVidéo ressources (actualités sciences sociales)"),
                     const SizedBox(height: 10),
-                    StatefulBuilder(
-                        builder: (context, setState) => ListTile(
-                              title: TextButton(
-                                onPressed: () =>
-                                    setState(() => refsIsOn = !refsIsOn),
-                                child: Text(
-                                  'References bibliographiques',
-                                  style: GoogleFonts.quicksand(
-                                      color: AppColors.light().gold,
-                                      fontSize: 16),
-                                ),
-                              ),
-                              subtitle: refsIsOn
-                                  ? Column(
-                                      children: AppTexts.refs
-                                          .map((e) => Column(
-                                                children: List.generate(
-                                                    e.length,
-                                                    (index) => Text(
-                                                          e[index],
-                                                          style: index == 1
-                                                              ? GoogleFonts.quicksand().copyWith(
-                                                                  fontStyle:
-                                                                      FontStyle
-                                                                          .italic,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400)
-                                                              : null,
-                                                        ))
-                                                  ..add(const Divider(
-                                                    height: 2,
-                                                  )),
-                                              ))
-                                          .toList(),
-                                    )
-                                  : null,
-                            ))
+                    
                   ],
                 )),
           ),

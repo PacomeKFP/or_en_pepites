@@ -46,4 +46,3 @@ enum DataLocals {
 
   String get key => name;
 }
-

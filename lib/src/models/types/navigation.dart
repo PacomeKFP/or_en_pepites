@@ -4,9 +4,9 @@ import 'package:or_en_pepite/src/core/configs/configs.dart';
 
 enum BottomNavigationItem {
   home,
-  music,
-  video,
   blog,
+  video,
+  music,
   downloads;
 
   String get label => this == home

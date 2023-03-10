@@ -1,19 +1,17 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/models/models.dart';
-import 'package:or_en_pepite/src/services/Authentication/Auth.service.dart';
 import 'package:or_en_pepite/src/views/Components/TextFormField.dart';
 
 import '../../../logic/Authentication/authentication_bloc.dart';
 
 class EmailPasswordAuth extends StatefulWidget {
-  AuthType authType;
-  EmailPasswordAuth({super.key, required this.authType});
+  final AuthType authType;
+  const EmailPasswordAuth({super.key, required this.authType});
 
   @override
   State<EmailPasswordAuth> createState() => _EmailPasswordStateAuth();
@@ -26,7 +24,6 @@ class _EmailPasswordStateAuth extends State<EmailPasswordAuth> {
       item.toString(): TextEditingController()
   };
 
-  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -98,8 +95,6 @@ class _EmailPasswordStateAuth extends State<EmailPasswordAuth> {
                     return BlocListener<AuthenticationBloc,
                         AuthenticationState>(
                       listener: (context, state) {
-                        print('new change');
-                        print(FirebaseAuth.instance.currentUser);
                         if ((state as AuthenticationInitial).authState ==
                             AuthState.authenticated) {
                           context.router.pushNamed('/');
@@ -140,7 +135,7 @@ class _EmailPasswordStateAuth extends State<EmailPasswordAuth> {
                                       }),
                                 );
 
-                            Timer(Duration(seconds: 3), () {
+                            Timer(const Duration(seconds: 3), () {
                               if ((state as AuthenticationInitial).authState ==
                                   AuthState.authenticated) {
                                 // context.router.pushNamed('/');

@@ -74,11 +74,13 @@ class _PageViewComponentState extends State<PageViewComponent> {
                       ),
                       child: ListTile(
                         title: Text(data['title'].toString()),
-                        subtitle: Text(
-                          data['description'].toString(),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        subtitle: data['description'] != null
+                            ? Text(
+                                data['description'].toString(),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              )
+                            : null,
                       ),
                     )))
                 .toList(),

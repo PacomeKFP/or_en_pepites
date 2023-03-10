@@ -19,11 +19,7 @@ Future<UserCredential?> signInWithGoogle(List<String> errors) async {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   } catch (e) {
     errors.add(e.toString());
-    print('\n\n\n\n');
-    print('=================Google Sign Error - Start =====================');
-    print(e);
-    print('=================Google Sign Error - End =======================');
-    print('\n\n\n\n');
+
     return null;
   }
 }

@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:or_en_pepite/src/services/Authentication/Auth.service.dart';
 import 'package:or_en_pepite/src/views/Components/TextFormField.dart';
 

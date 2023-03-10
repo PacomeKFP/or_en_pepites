@@ -63,11 +63,12 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   }
 
   @override
-  void dispose() {
-    _durationSubscription?.cancel();
-    _positionSubscription?.cancel();
-    _playerCompleteSubscription?.cancel();
-    _playerStateChangeSubscription?.cancel();
+  Future<void> dispose() async {
+    await _durationSubscription?.cancel();
+    await _positionSubscription?.cancel();
+    await _playerCompleteSubscription?.cancel();
+    await _playerStateChangeSubscription?.cancel();
+    await _stop();
     super.dispose();
   }
 
@@ -76,12 +77,12 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     final color = Theme.of(context).primaryColor;
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xF6FFFFFF),
+        color: const Color(0xF6F0F0F0),
         borderRadius: BorderRadius.circular(Dimens.radius),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(.4),
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             blurRadius: 4,
             spreadRadius: 2,
           ),

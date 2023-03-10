@@ -29,18 +29,21 @@ class PodcastModel extends Downloadable {
   PageRouteInfo get pageRoute => PodcastDetailsRoute(podcast: this);
 
   @override
-  Future<void> download() async {
+  Future<void> download({callback}) async {
     if (source == FileSource.local) {
-      return print('The file is already on the internal storage');
+      return;
     }
     try {
+      double percent = 0;
       DataManager dataManager = await DataManager.create();
       Dio dio = Dio();
       String filePath = join(dataManager.audio, "$title.mp3");
-      await dio.download(path, filePath,
-          onReceiveProgress: (count, total) =>
-              print("Received: $count on $total"),
-          options: Options(receiveTimeout: const Duration(minutes: 2)));
+      await dio.download(path, filePath, onReceiveProgress: (count, total) {
+        if (count / total - percent > 0.1) {
+          percent = count / total;
+          callback(percent * 100);
+        }
+      }, options: Options(receiveTimeout: const Duration(minutes: 2)));
 
       await addToDownloads(localFilePath: filePath);
     } catch (e) {

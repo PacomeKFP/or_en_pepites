@@ -27,6 +27,7 @@ class NewsletterModel extends DataModel {
       ],
     );
 
+  @override
   DataType get dataType => DataType.newsletter;
   
   @override

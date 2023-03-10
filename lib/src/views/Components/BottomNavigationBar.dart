@@ -16,8 +16,9 @@ class AppNavigation extends StatelessWidget {
         /// TODO: replace the onTap method by a cubit actionner
         onTap: (int index) {
           // setState(() => _index = index);
-          if (index != currentIndex)
-            context.router.pushNamed(BottomNavigationItem.values[index].path);
+          if (index != currentIndex) {
+            context.router.replaceNamed(BottomNavigationItem.values[index].path);
+          }
         },
         items: BottomNavigationItem.values
             .map(

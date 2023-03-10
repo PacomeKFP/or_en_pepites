@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:or_en_pepite/src/services/Resources/resources.dart';
 import 'package:or_en_pepite/src/views/Blog/Components/LetterItem.dart';
 import 'package:or_en_pepite/src/models/models.dart';
+import 'package:or_en_pepite/src/models/types/navigation.dart';
 
 import '../Components/AppBar.dart';
 import '../Components/BottomNavigationBar.dart';
@@ -16,10 +17,10 @@ class NewsLettersListPage extends StatelessWidget {
         child: Scaffold(
       appBar: appBarComponent(context, "Concepts en Pépites"),
       endDrawer: const DrawerComponent(),
-      bottomNavigationBar: const AppNavigation(
-        currentIndex: 3,
+      bottomNavigationBar: AppNavigation(
+        currentIndex: BottomNavigationItem.blog.index,
       ),
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(

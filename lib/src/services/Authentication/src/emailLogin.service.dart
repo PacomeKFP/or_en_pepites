@@ -1,8 +1,9 @@
 part of auth.service;
 
-Future<UserCredential?>  emailPasswordLogin(List<String> errors, Map<String, String> data) async {
+Future<UserCredential?> emailPasswordLogin(
+    List<String> errors, Map<String, String> data) async {
   try {
-    final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+    return await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: data['email']!,
       password: data['password']!,
     );
@@ -13,8 +14,8 @@ Future<UserCredential?>  emailPasswordLogin(List<String> errors, Map<String, Str
       errors.add("Mot de passe incorrect pour cet utilisateur.");
     }
   } catch (e) {
-    print(e);
     errors.add(
         "Une erreur est survunue, verifier votre connexion internet et reéssayez.\n Si cela persiste, veuillez contacter le developpeur de l'application.");
   }
+  return null;
 }

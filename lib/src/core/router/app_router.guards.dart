@@ -5,15 +5,13 @@ class CheckAuthState extends AutoRouteGuard {
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) async {
     if (FirebaseAuth.instance.currentUser == null) {
-      print("Not auth, and redirected by route guard");
       // router.
-      
-      router.push(AuthenticationRoute());
+      router.push(const AuthenticationRoute());
       return;
     }
     if (['/auth', 'auth'].contains(resolver.route.path)) {
       // router.redirect('/');
-      router.push(UserHomeRoute());
+      router.push(const UserHomeRoute());
       return;
     }
     resolver.next(true);

@@ -15,7 +15,7 @@ class VideoItemComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => context.router.push(VideoDetailsRoute(
+      onTap: () => context.router.replace(VideoDetailsRoute(
           video: VideoModel.fromVideo(video)..addToHistory())),
       child: Card(
         color: AppColors.light().gold.withOpacity(.2),

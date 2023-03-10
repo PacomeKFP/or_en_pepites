@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/models/models.dart';
+import 'package:or_en_pepite/src/models/types/navigation.dart';
 import 'package:or_en_pepite/src/services/Resources/manager.dart';
 
 import '../Components/AppBar.dart';
@@ -44,7 +45,7 @@ class HistoryPageState extends State<HistoryPage> {
         child: Scaffold(
       appBar: appBarComponent(context, "Historique"),
       endDrawer: const DrawerComponent(),
-      bottomNavigationBar: const AppNavigation(currentIndex: 0),
+      bottomNavigationBar: AppNavigation(currentIndex: BottomNavigationItem.home.index),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,

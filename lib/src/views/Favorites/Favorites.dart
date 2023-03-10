@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/models/models.dart';
+import 'package:or_en_pepite/src/models/types/navigation.dart';
 import 'package:or_en_pepite/src/services/Resources/manager.dart';
 import 'package:or_en_pepite/src/utils/functions.dart';
 
@@ -50,7 +51,7 @@ class FavoritesPageState extends State<FavoritesPage> {
         child: Scaffold(
       appBar: appBarComponent(context, "Favoris"),
       endDrawer: const DrawerComponent(),
-      bottomNavigationBar: const AppNavigation(currentIndex: 0),
+      bottomNavigationBar:  AppNavigation(currentIndex: BottomNavigationItem.home.index,),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,

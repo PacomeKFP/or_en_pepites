@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/models/models.dart';
+import 'package:or_en_pepite/src/models/types/navigation.dart';
 import 'package:or_en_pepite/src/utils/functions.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
@@ -43,11 +44,13 @@ class _VideoDetailsPageState extends State<VideoDetailsPage> {
 
   @override
   void dispose() {
-    super.dispose();
+    print('disposing from viideo');
     _youtubePlayerController.pause();
-    _youtubePlayerController.reset();
-    _youtubePlayerController.dispose();
-    _localVideoPlayerController.dispose();
+    _localVideoPlayerController.pause();
+
+    // _youtubePlayerController.dispose();
+    // _localVideoPlayerController.dispose();
+    super.dispose();
   }
 
   @override
@@ -56,9 +59,8 @@ class _VideoDetailsPageState extends State<VideoDetailsPage> {
         child: Scaffold(
       appBar: appBarComponent(context, "Informations en Pépites"),
       endDrawer: const DrawerComponent(),
-      bottomNavigationBar: const AppNavigation(
-        currentIndex: 2,
-      ),
+      bottomNavigationBar:
+          AppNavigation(currentIndex: BottomNavigationItem.video.index),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,

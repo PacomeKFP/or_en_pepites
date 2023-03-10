@@ -17,7 +17,6 @@ import 'package:or_en_pepite/src/views/Music/MusicsList.view.dart';
 import 'package:or_en_pepite/src/views/Profile/UserProfile.view.dart';
 import 'package:or_en_pepite/src/views/Videos/VideoDetails.view.dart';
 import 'package:or_en_pepite/src/views/Videos/VideosList.view.dart';
-import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 part 'app_router.gr.dart';
 part 'app_router.guards.dart';
 

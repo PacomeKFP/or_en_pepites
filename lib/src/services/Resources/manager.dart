@@ -29,7 +29,6 @@ class DataManager {
   static Future<DataManager> create() async {
     ///dossier tmp par defaut pour l'app
     final dir = await getTemporaryDirectory();
-    final secDir = await getApplicationDocumentsDirectory();
 
     ///Dossier pour les fichiers audio
     final image = Directory(join(dir.path, 'image'));
@@ -62,14 +61,14 @@ class DataManager {
             //   "shareLink": "",
             // }
           ],
-          "videos": [
-            // { "videoId":"",
-            //   "path": "",
-            //   "title": "",
-            //   "description": "",
-            //   "shareLink": "",
-            // }
-          ]
+          // "videos": [
+          //   // { "videoId":"",
+          //   //   "path": "",
+          //   //   "title": "",
+          //   //   "description": "",
+          //   //   "shareLink": "",
+          //   // }
+          // ]
         },
         "favorites": {
           "videos": [
@@ -129,9 +128,10 @@ class DataManager {
     Map<String, dynamic> dataContent =
         json.decode((await dataFile.readAsString()));
     //Si l'element est deja en fav, alors plus besoin de le refaire
-    if (dataContent[to.key][type.key].contains(item))
-      dataContent[to.key][type.key].remove(item);
-    dataContent[to.key][type.key].add(item);
+    if (!dataContent[to.key][type.key].contains(item)) {
+      dataContent[to.key][type.key].add(item);
+    }
+
     //et on modifier le fichier de db
     dataFile.writeAsString(json.encode(dataContent));
 
@@ -154,14 +154,11 @@ class DataManager {
       await test(data: await dataFile.readAsString());
 
       var dataContent = a;
-// print('papa');
       return dataType == null
           ? dataContent[from.key]
           : dataContent[from.key]![dataType.key];
     } catch (e) {
-      print('cic');
-      print(e);
-      print('ici');
+      //Implement this
     }
   }
 
@@ -186,13 +183,14 @@ class DataManager {
     return dataContent;
   }
 
-  Future logThis({required String title, LogType type = LogType.error, required item }) async {}
+  Future logThis(
+      {required String title,
+      LogType type = LogType.error,
+      required item}) async {}
 }
 
 enum LogType {
   info,
   debug,
   error;
-
-
 }

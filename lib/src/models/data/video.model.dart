@@ -25,7 +25,8 @@ class VideoModel extends Downloadable {
   factory VideoModel.fromVideo(Video video) => VideoModel._internal(
       path: video.url,
       shareLink: video.url,
-      description: video.description,
+      //ici on va utiliser la custom description et non celle de la video youtube
+      description: AppTexts.videoDescription,
       id: video.id.value,
       title: video.title,
       source: FileSource.network);
@@ -37,6 +38,6 @@ class VideoModel extends Downloadable {
 
   @override
   Future<void> download() async {
-    print("Downloads Not implemented Yet");
+    print('Not Implemented yet');
   }
 }

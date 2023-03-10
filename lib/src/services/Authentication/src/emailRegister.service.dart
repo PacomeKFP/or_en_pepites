@@ -1,16 +1,18 @@
 part of auth.service;
 
-Future<UserCredential?>  emailPasswordRegister(List<String> errors, Map<String, String> data) async {
+Future<UserCredential?> emailPasswordRegister(
+    List<String> errors, Map<String, String> data) async {
   FirebaseAuth auth = FirebaseAuth.instance;
-  print(data['email']);
   try {
     var credential = await auth.createUserWithEmailAndPassword(
       email: data['email']!.toString()..trim(),
       password: data['password']!.toString().trim(),
     );
     User? user = credential.user;
+
+    ///saving the user name too
     await user!.updateDisplayName(data['name']);
-    await user.reload().then((value) => print(user!.displayName));
+    await user.reload().then((value) => null);
     user = auth.currentUser;
 
     return credential;
@@ -25,7 +27,6 @@ Future<UserCredential?>  emailPasswordRegister(List<String> errors, Map<String, 
   } catch (e) {
     errors.add(
         "Une erreur est survunue, verifier votre connexion internet et reéssayez.\n Si cela persiste, veuillez contacter le developpeur de l'application.");
-    print(e);
   }
-  //TODO: if ok, we have to save user name
+  return null;
 }
