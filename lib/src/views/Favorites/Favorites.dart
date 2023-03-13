@@ -1,15 +1,9 @@
-import 'dart:convert';
-import 'dart:developer';
-import 'dart:io';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/models/models.dart';
 import 'package:or_en_pepite/src/models/types/navigation.dart';
 import 'package:or_en_pepite/src/services/Resources/manager.dart';
-import 'package:or_en_pepite/src/utils/functions.dart';
 
 import '../Components/AppBar.dart';
 import '../Components/BottomNavigationBar.dart';
@@ -18,7 +12,7 @@ import '../Components/PageViewComponent.dart';
 import '../Components/SliversNavigationComponent.dart';
 
 class FavoritesPage extends StatefulWidget {
-  FavoritesPage({super.key});
+  const FavoritesPage({super.key});
 
   @override
   State<FavoritesPage> createState() => FavoritesPageState();
@@ -30,14 +24,11 @@ class FavoritesPageState extends State<FavoritesPage> {
       DataManager dataManager = await DataManager.create();
       var data = await dataManager.get(from: DataLocals.favorites);
 
-      await dataManager.test(
-          data: json.encode((data as Map).values.toList()),
-          fileName: 'histvals.json');
+      
 
       return data;
     } catch (e) {
-      print('err');
-      print(e);
+      //
     }
   }
 
@@ -66,7 +57,7 @@ class FavoritesPageState extends State<FavoritesPage> {
                     Map? data = snapshot.data;
                     return snapshot.connectionState == ConnectionState.done &&
                             snapshot.hasData
-                        ? Container(
+                        ? SizedBox(
                             height: MediaQuery.of(context).size.height,
                             child: NestedScrollView(
                                 headerSliverBuilder:

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/models/types/navigation.dart';
 
@@ -8,7 +7,7 @@ import '../Components/BottomNavigationBar.dart';
 import '../Components/Drawer.dart';
 
 class AboutPage extends StatelessWidget {
-  AboutPage({super.key});
+  const AboutPage({super.key});
 
 
   @override

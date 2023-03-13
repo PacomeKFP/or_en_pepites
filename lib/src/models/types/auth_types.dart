@@ -3,9 +3,20 @@ part of models;
 enum AuthType {
   login,
   register,
+  resetPassword,
   authenticate;
 
-  get label => this == login ? 'Se Connecter' : "S'inscrire";
+  String get label => this == login
+      ? 'Se Connecter'
+      : this == resetPassword
+          ? "Reinitialiser mon mot de passe"
+          : "S'inscrire";
+
+  String get attachedText => this == login
+      ? "Je n'ai pas encore de compte" 
+      : this == resetPassword
+          ? "Me connecter"
+          : "J'ai déja un compte";
 }
 
 enum AuthState {

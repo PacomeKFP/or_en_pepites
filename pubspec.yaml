@@ -17,16 +17,16 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2
-  flutter_facebook_auth: ^5.0.7
-  flutter_local_notifications: ^8.2.0
-  font_awesome_flutter: ^10.4.0
+  # flutter_facebook_auth: ^5.0.7
+  # flutter_local_notifications: ^8.2.0
+  # font_awesome_flutter: ^10.4.0
   google_fonts: ^4.0.3
   google_sign_in: ^6.0.0
   path: ^1.8.2
   path_provider: ^2.0.13
-  permission_handler: ^10.2.0
-  sqflite: ^2.2.4+1
-  uuid: ^3.0.7
+  # permission_handler: ^10.2.0
+  # sqflite: ^2.2.4+1
+  # uuid: ^3.0.7
   video_player: ^2.5.1
   youtube_explode_dart: ^1.12.3
   youtube_player_flutter: ^8.1.2
@@ -44,11 +44,5 @@ flutter:
     - assets/logos/google_light.png
     - assets/logos/google_dark.png
     - assets/logos/facebook_new.png
-    - assets/logos/2.0x/
-    - assets/logos/3.0x/
     - assets/images/
 
-    # Data assets
-    - assets/data/remote.json
-    - assets/data/data.json
-    - assets/data/local.json

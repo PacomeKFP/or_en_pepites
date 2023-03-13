@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/logic/blocs.dart';
 import 'package:or_en_pepite/src/models/types/navigation.dart';
-import 'package:or_en_pepite/src/utils/functions.dart';
 
 class NavigationComponent extends StatefulWidget {
   final Map? data;
@@ -50,7 +49,7 @@ class _NavigationComponentState extends State<NavigationComponent> {
                           duration: const Duration(milliseconds: 300),
                           curve: Curves.easeInOut);
                     } catch (e) {
-                      print(e);
+                      // impl
                     }
                   },
                   child: Column(

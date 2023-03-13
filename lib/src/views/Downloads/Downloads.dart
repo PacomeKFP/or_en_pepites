@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
@@ -25,13 +24,11 @@ class DownloadsPageState extends State<DownloadsPage> {
       DataManager dataManager = await DataManager.create();
       var data = await dataManager.get(from: DataLocals.downloads);
 
-      await dataManager.test(
-          data: json.encode((data as Map).values.toList()),
-          fileName: 'histvals.json');
+     
 
       return data;
     } catch (e) {
-      print(e);
+      //
     }
   }
 

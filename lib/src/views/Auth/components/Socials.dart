@@ -1,11 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/logic/blocs.dart';
 import 'package:or_en_pepite/src/models/models.dart';
-import 'package:or_en_pepite/src/services/Authentication/Auth.service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class SocialLoginButton extends StatelessWidget {
   final SocialButtons button;

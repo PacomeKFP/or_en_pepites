@@ -1,9 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:bloc/bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:or_en_pepite/src/core/router/app_router.dart';
 import 'package:or_en_pepite/src/models/models.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 import '../../logic/blocs.dart';
@@ -20,31 +17,18 @@ class AuthenticationPage extends StatefulWidget {
 
 class _AuthenticationPageState extends State<AuthenticationPage> {
   AuthType authType = AuthType.register;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    // Bloc authBloc = AuthenticationBloc();
-    // authBloc.add(InitAuthentication());
-    // var authBlocState = authBloc.state as AuthenticationInitial;
-
-    // if (authBlocState.authState == AuthState.authenticated &&
-    //     authBlocState.currentUser != null) {
-    //   AppRouter(checkAuthState: CheckAuthState()).pushNamed('/');
-    // }
-  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     List<SocialButtons> buttons = [
       SocialButtons.google,
-      // SocialButtons.facebookNew
     ];
+
     return Scaffold(
         body: SafeArea(
       child: BlocProvider(
-        create: (context)=>AuthenticationBloc(),
+        create: (context) => AuthenticationBloc(),
         child: Container(
           padding: const EdgeInsets.only(
             left: 30,
@@ -61,12 +45,13 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                   builder: (context, state) {
                 if ((state as AuthenticationInitial).authState ==
                     AuthState.authenticated) {
+                  print('Authview file');
                   context.router.pushNamed('/');
                 }
                 if (state.authErrors.isNotEmpty) {}
                 return Column(
-                  children: state.authErrors.map((error) => Text(error)).toList(),
-                );
+                    children:
+                        state.authErrors.map((error) => Text(error)).toList());
               }),
               EmailPasswordAuth(authType: authType),
               const SizedBox(height: 35),
@@ -76,27 +61,38 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                             button: button,
                           ))
                       .toList()),
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    if (authType == AuthType.login)
-                      authType = AuthType.register;
-                    else
-                      authType = AuthType.login;
-                  });
-                  print(authType);
-                },
-                child: Text(
-                    authType == AuthType.login
-                        ? "Je n'ai pas encore de compte"
-                        : "J'ai deja un compte",
-                    style: GoogleFonts.roboto(
-                        fontSize: 16, color: AppColors.light().gold)),
-              )
+              if (authType != AuthType.resetPassword) toggleLoginRegButton(),
+              toggleResetPaswword()
             ],
           )),
         ),
       ),
     ));
+  }
+
+  TextButton toggleLoginRegButton() => TextButton(
+        onPressed: () {
+          setState(() {
+            authType =
+                authType == AuthType.login ? AuthType.register : AuthType.login;
+          });
+        },
+        child: Text(authType.attachedText,
+            style: GoogleFonts.roboto(
+                fontSize: 16, color: AppColors.light().gold)),
+      );
+  TextButton toggleResetPaswword() {
+    return TextButton(
+      onPressed: () {
+        setState(() {
+          authType = authType == AuthType.login
+              ? AuthType.resetPassword
+              : AuthType.login;
+        });
+      },
+      child: Text(authType.attachedText,
+          style:
+              GoogleFonts.roboto(fontSize: 16, color: AppColors.light().gold)),
+    );
   }
 }

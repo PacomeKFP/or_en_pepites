@@ -4,15 +4,13 @@ import 'dart:io';
 import 'package:or_en_pepite/src/models/models.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
+// import 'package:permission_handler/permission_handler.dart';
 // import 'package:path/path.dart';
 
 class DataManager {
   /// chemin d'acces au dossier de stockage de toute l'application
   final String dir;
 
-  ///Chemin d'acces au dossier de stockage des images qui seront telechargés
-  final String image;
 
   ///Chemin d'acces au dossier de stockage des audio qui seront telechargés
   final String audio;
@@ -24,15 +22,11 @@ class DataManager {
   final String data;
 
   DataManager._internal(
-      this.dir, this.image, this.audio, this.video, this.data);
+      this.dir,  this.audio, this.video, this.data);
 
   static Future<DataManager> create() async {
     ///dossier tmp par defaut pour l'app
     final dir = await getTemporaryDirectory();
-
-    ///Dossier pour les fichiers audio
-    final image = Directory(join(dir.path, 'image'));
-    if (!(await image.exists())) image.create();
 
     ///Dossier pour les fichiers audio
     final audio = Directory(join(dir.path, 'audio'));
@@ -113,7 +107,7 @@ class DataManager {
     }
 
     return DataManager._internal(
-        dir.path, image.path, audio.path, video.path, data.path);
+        dir.path, audio.path, video.path, data.path);
   }
 
   /// [item]: json de l'objet (video, podcast, newsletter)
@@ -135,9 +129,6 @@ class DataManager {
     //et on modifier le fichier de db
     dataFile.writeAsString(json.encode(dataContent));
 
-    print("======================//===============");
-    print("[${to.name}]  SUCCESS");
-    print("======================//===============");
   }
 
   /// [from] :la source de donnée (historique, favoris ou )
@@ -151,7 +142,7 @@ class DataManager {
 
       var a = (await json.decode(await dataFile.readAsString()));
 
-      await test(data: await dataFile.readAsString());
+      // await test(data: await dataFile.readAsString());
 
       var dataContent = a;
       return dataType == null
@@ -162,18 +153,18 @@ class DataManager {
     }
   }
 
-  Future<void> test(
-      {required String data, String fileName = "data.json"}) async {
-    var status = Permission.manageExternalStorage.status;
-    if (await status.isDenied) {
-      Permission.manageExternalStorage.request();
-    }
-    final path = Directory("/storage/emulated/0/000aaaOr");
-    if (!(await path.exists())) path.create(recursive: true);
-    File file = File(join(path.path, fileName));
-    if (!(await file.exists())) path.create(recursive: true);
-    file.writeAsString(data);
-  }
+  // Future<void> test(
+  //     {required String data, String fileName = "data.json"}) async {
+  //   var status = Permission.manageExternalStorage.status;
+  //   if (await status.isDenied) {
+  //     Permission.manageExternalStorage.request();
+  //   }
+  //   final path = Directory("/storage/emulated/0/000aaaOr");
+  //   if (!(await path.exists())) path.create(recursive: true);
+  //   File file = File(join(path.path, fileName));
+  //   if (!(await file.exists())) path.create(recursive: true);
+  //   file.writeAsString(data);
+  // }
 
   Future getAll() async {
     File dataFile = File(data);

@@ -61,7 +61,7 @@ class _ChangePasswordComponentState extends State<ChangePasswordComponent> {
                                       : "Une erreur est survenue veuillez vérifer votre connexion internet, puis reéssayez"))));
                     }
 
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text("Les mots de passe ne concordent pas.")));
                   },
                   icon: const Icon(

@@ -1,13 +1,11 @@
 import 'dart:io';
 
-import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 import 'package:or_en_pepite/src/models/models.dart';
 import 'package:or_en_pepite/src/models/types/navigation.dart';
-import 'package:or_en_pepite/src/utils/functions.dart';
 import 'package:video_player/video_player.dart';
-import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../Components/AppBar.dart';
@@ -44,7 +42,9 @@ class _VideoDetailsPageState extends State<VideoDetailsPage> {
 
   @override
   void dispose() {
-    print('disposing from viideo');
+    if (kDebugMode) {
+      print('disposing from viideo');
+    }
     _youtubePlayerController.pause();
     _localVideoPlayerController.pause();
 
@@ -76,7 +76,7 @@ class _VideoDetailsPageState extends State<VideoDetailsPage> {
                               _localVideoPlayerController.value.aspectRatio,
                           child: VideoPlayer(_localVideoPlayerController),
                         )
-                      : CircularProgressIndicator()
+                      : const CircularProgressIndicator()
                   : YoutubePlayer(
                       controller: _youtubePlayerController,
                       showVideoProgressIndicator: true,
@@ -86,7 +86,9 @@ class _VideoDetailsPageState extends State<VideoDetailsPage> {
                         handleColor: Colors.amberAccent,
                       ),
                       onReady: () {
-                        print('Player is ready.');
+                        if (kDebugMode) {
+                          print('Player is ready.');
+                        }
                       },
                     ),
               Text(

@@ -21,7 +21,7 @@ class AppTheme {
       ),
       drawerTheme: DrawerThemeData(backgroundColor: colors.background),
       cardColor: colors.background,
-      bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.white70),
+      bottomSheetTheme: const BottomSheetThemeData(backgroundColor: Colors.white70),
       dialogTheme: DialogTheme(backgroundColor: colors.background),
       primaryColor: Colors.white,
       colorScheme: ColorScheme(

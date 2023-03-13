@@ -43,7 +43,6 @@ class UserProfilePage extends StatelessWidget {
 
                 AccountsFields(),
 
-                ///TODO: verifier le type d'auth:  SOCIAL ou EMAIL-PASS
                 if (display) const ChangePasswordComponent()
               ],
             ),

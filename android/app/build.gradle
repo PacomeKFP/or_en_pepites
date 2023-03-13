@@ -78,7 +78,7 @@ android {
     }
     buildTypes {
         release {
-            // crunchPngs false
+            crunchPngs false
             signingConfig signingConfigs.release
         }
     }

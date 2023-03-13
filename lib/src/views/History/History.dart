@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
@@ -13,7 +12,7 @@ import '../Components/PageViewComponent.dart';
 import '../Components/SliversNavigationComponent.dart';
 
 class HistoryPage extends StatefulWidget {
-  HistoryPage({super.key});
+  const HistoryPage({super.key});
 
   @override
   State<HistoryPage> createState() => HistoryPageState();
@@ -24,11 +23,6 @@ class HistoryPageState extends State<HistoryPage> {
     try {
       DataManager dataManager = await DataManager.create();
       var data = await dataManager.get(from: DataLocals.history);
-
-      await dataManager.test(
-          data: json.encode((data as Map).values.toList()),
-          fileName: 'histvals.json');
-
       return data;
     } catch (e) {
       print(e);

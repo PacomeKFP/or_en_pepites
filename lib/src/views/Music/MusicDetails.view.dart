@@ -24,7 +24,7 @@ class _PodcastDetailsPageState extends State<PodcastDetailsPage> {
   void initState() {
     super.initState();
 
-    _player = AudioPlayer(playerId: widget.podcast.title);
+    _player = AudioPlayer(playerId: "${widget.podcast.title}");
     if (widget.podcast.source == FileSource.network) {
       _player.setSourceDeviceFile(widget.podcast.path);
     }
@@ -32,8 +32,8 @@ class _PodcastDetailsPageState extends State<PodcastDetailsPage> {
 
   @override
   Future<void> dispose() async {
-    await _player.stop();
-    super.dispose();
+    await _player.pause();
+    // super.dispose();
   }
 
   @override
@@ -124,15 +124,17 @@ class _PodcastDetailsPageState extends State<PodcastDetailsPage> {
   }
 
   _download(context) async =>
-      await widget.podcast.download(callback: (percent) {
-        ScaffoldMessenger.of(context).removeCurrentSnackBar();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Le podcast a été téléchargé à $percent%'))
-        );
+      await widget.podcast.download(
+      //   callback: (percent) {
+      //   ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //     SnackBar(content: Text('Le podcast a été téléchargé à $percent%'))
+      //   );
         
-      }).then((value) => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      // }
+      ).then((value) => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
-              'Votre podcast a bien été téléchargé, ils era desormais disponible hors ligne'))));
+              'Votre podcast a bien été téléchargé, il sera desormais disponible hors ligne'))));
 }
 
 /*

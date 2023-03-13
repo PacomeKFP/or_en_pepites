@@ -37,9 +37,9 @@ class _PodcastItemComponentState extends State<PodcastItemComponent> {
 
   @override
   Future<void> dispose() async {
-    await _player.stop();
+    // await _player.pause();
     // await _player.dispose();
-    super.dispose();
+    // super.dispose();
   }
 
   @override

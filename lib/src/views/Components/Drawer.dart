@@ -1,13 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
-import 'package:or_en_pepite/src/logic/Authentication/authentication_bloc.dart';
-import 'package:or_en_pepite/src/models/models.dart';
 import 'package:or_en_pepite/src/models/types/navigation.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:or_en_pepite/src/services/Authentication/Auth.service.dart';
-import 'package:or_en_pepite/src/views/Auth/Auth.view.dart';
 
 class DrawerComponent extends StatelessWidget {
   const DrawerComponent({super.key});
@@ -72,7 +67,6 @@ class DrawerComponent extends StatelessWidget {
                         .copyWith(color: AppColors.light().gold),
                   ),
                   onTap: () {
-                    //TODO push to the in option.path location
                     context.router.pushNamed(option.path);
                   },
                 ),

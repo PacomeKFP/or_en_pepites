@@ -24,7 +24,6 @@ class _EmailPasswordStateAuth extends State<EmailPasswordAuth> {
       item.toString(): TextEditingController()
   };
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -56,20 +55,21 @@ class _EmailPasswordStateAuth extends State<EmailPasswordAuth> {
                 validators: [(v) => !EmailValidator.isValidEmail(v)],
                 placedholder: 'Entrer votre email ...',
               ),
-              CustomTextField(
-                controller: controllers['password']!,
-                icon: Icons.key_sharp,
-                label: 'Mot de passe',
-                validators: widget.authType == AuthType.register
-                    ? [
-                        (v) =>
-                            controllers['password_confirm']!.text !=
-                            controllers['password']!.text
-                      ]
-                    : null,
-                placedholder: 'Entrer votre mot de passe ...',
-                isObscurable: true,
-              ),
+              if (widget.authType != AuthType.resetPassword)
+                CustomTextField(
+                  controller: controllers['password']!,
+                  icon: Icons.key_sharp,
+                  label: 'Mot de passe',
+                  validators: widget.authType == AuthType.register
+                      ? [
+                          (v) =>
+                              controllers['password_confirm']!.text !=
+                              controllers['password']!.text
+                        ]
+                      : null,
+                  placedholder: 'Entrer votre mot de passe ...',
+                  isObscurable: true,
+                ),
               widget.authType == AuthType.register
                   ? CustomTextField(
                       controller: controllers['password_confirm']!,
@@ -97,19 +97,40 @@ class _EmailPasswordStateAuth extends State<EmailPasswordAuth> {
                       listener: (context, state) {
                         if ((state as AuthenticationInitial).authState ==
                             AuthState.authenticated) {
+                          print("email component");
                           context.router.pushNamed('/');
+                        }
+                        if (state.authErrors.isNotEmpty) {
+                          state.authErrors.map((String error) =>
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                dismissDirection: DismissDirection.horizontal,
+                                margin: const EdgeInsets.only(
+                                    bottom: Dimens.minPadding),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        Dimens.radius * 2)),
+                                showCloseIcon: true,
+                                duration: const Duration(seconds: 6),
+                                content: Text(
+                                  error,
+                                  style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                backgroundColor: AppColors.light().error,
+                              )));
                         }
                       },
                       child: InkWell(
                         child: Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
+                              horizontal: 10, vertical: 12),
                           decoration: BoxDecoration(
                               color: Theme.of(context).colorScheme.primary,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(8))),
                           width: double.infinity,
-                          height: 45,
                           alignment: Alignment.center,
                           child: Text(widget.authType.label,
                               style: Theme.of(context)
@@ -138,7 +159,6 @@ class _EmailPasswordStateAuth extends State<EmailPasswordAuth> {
                             Timer(const Duration(seconds: 3), () {
                               if ((state as AuthenticationInitial).authState ==
                                   AuthState.authenticated) {
-                                // context.router.pushNamed('/');
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                         content:

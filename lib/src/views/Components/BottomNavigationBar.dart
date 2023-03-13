@@ -12,8 +12,6 @@ class AppNavigation extends StatelessWidget {
         backgroundColor: Colors.white,
         type: BottomNavigationBarType.shifting,
         currentIndex: currentIndex,
-
-        /// TODO: replace the onTap method by a cubit actionner
         onTap: (int index) {
           // setState(() => _index = index);
           if (index != currentIndex) {

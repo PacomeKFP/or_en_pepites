@@ -41,7 +41,6 @@ class _VideosListPageState extends State<VideosListPage> {
                   builder: (context, snapshot) {
                     Widget child =
                         const Center(child: CircularProgressIndicator());
-                    List<Widget> children = [];
 
                     switch (snapshot.connectionState) {
                       case ConnectionState.none:

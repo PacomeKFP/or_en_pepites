@@ -4,10 +4,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
-import 'package:or_en_pepite/src/core/router/app_router.dart';
 import 'package:or_en_pepite/src/logic/blocs.dart';
 import 'package:or_en_pepite/src/models/models.dart';
-import 'package:or_en_pepite/src/views/Music/MusicDetails.view.dart';
 
 class PageViewComponent extends StatefulWidget {
   final PageController controller;
@@ -33,10 +31,9 @@ class _PageViewComponentState extends State<PageViewComponent> {
       controller: widget.controller,
       children: widget.data!.entries.toList().map((MapEntry entry) {
         var dataType = entry.value;
-        var key = entry.key;
         if ([null, []].contains(dataType as List) ||
-            (dataType as List).isEmpty) {
-          return Text('Aucune donnée disponible');
+            (dataType).isEmpty) {
+          return const Text('Aucune donnée disponible');
         }
 
         return SingleChildScrollView(
@@ -64,7 +61,7 @@ class _PageViewComponentState extends State<PageViewComponent> {
                             color: AppColors.light().gold.withOpacity(0.2),
                             spreadRadius: 5,
                             blurRadius: 7,
-                            offset: Offset(0, 3), // changes position of shadow
+                            offset: const Offset(0, 3), // changes position of shadow
                           ),
                         ],
                         borderRadius: BorderRadius.circular(Dimens.radius),

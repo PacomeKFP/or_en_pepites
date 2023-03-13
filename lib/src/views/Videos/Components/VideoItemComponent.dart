@@ -5,7 +5,6 @@ import 'package:or_en_pepite/src/core/router/app_router.dart';
 import 'package:or_en_pepite/src/models/models.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:video_player/video_player.dart';
 
 class VideoItemComponent extends StatelessWidget {
   final Video video;

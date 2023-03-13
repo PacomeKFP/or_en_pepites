@@ -24,7 +24,7 @@ PreferredSizeWidget appBarComponent(context, name) => AppBar(
             .titleMedium!
             .copyWith(color: Theme.of(context).colorScheme.onSurface),
       ),
-      leading: AutoLeadingButton(
-        color: AppColors.light().onSurface,
-      ),
+      leading: name != "Acceuil" ? AutoLeadingButton(
+        color: AppColors.light().gold,
+      ):null,
     );

@@ -68,8 +68,8 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     await _positionSubscription?.cancel();
     await _playerCompleteSubscription?.cancel();
     await _playerStateChangeSubscription?.cancel();
-    await _stop();
-    super.dispose();
+    await _pause();
+    // super.dispose();
   }
 
   @override

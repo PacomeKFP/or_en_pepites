@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 
 enum BottomNavigationItem {
@@ -46,14 +45,14 @@ enum BottomNavigationItem {
                   : "/downloads";
 
   IconData get icon => this == home
-      ? FontAwesomeIcons.house
+      ? Icons.house
       : this == music
-          ? FontAwesomeIcons.podcast
+          ? Icons.my_library_music_outlined
           : this == video
-              ? FontAwesomeIcons.video
+              ? Icons.video_library_outlined
               : this == blog
-                  ? FontAwesomeIcons.newspaper
-                  : FontAwesomeIcons.download;
+                  ? Icons.newspaper
+                  : Icons.download;
 
   Color get bgColor => this == home
       ? AppColors.light().onBackground
