@@ -45,7 +45,6 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                   builder: (context, state) {
                 if ((state as AuthenticationInitial).authState ==
                     AuthState.authenticated) {
-                  print('Authview file');
                   context.router.pushNamed('/');
                 }
                 if (state.authErrors.isNotEmpty) {}
@@ -77,7 +76,10 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                 authType == AuthType.login ? AuthType.register : AuthType.login;
           });
         },
-        child: Text(authType.attachedText,
+        child: Text(
+            authType == AuthType.resetPassword
+                ? AuthType.login.attachedText
+                : authType.attachedText,
             style: GoogleFonts.roboto(
                 fontSize: 16, color: AppColors.light().gold)),
       );
@@ -90,7 +92,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               : AuthType.login;
         });
       },
-      child: Text(authType.attachedText,
+      child: Text(authType == AuthType.resetPassword ?"Me Connecter " :AuthType.resetPassword.attachedText,
           style:
               GoogleFonts.roboto(fontSize: 16, color: AppColors.light().gold)),
     );

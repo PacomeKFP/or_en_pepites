@@ -30,9 +30,10 @@ class _EmailPasswordStateAuth extends State<EmailPasswordAuth> {
       children: [
         Text(
           widget.authType.label,
+          textAlign: TextAlign.center,
           style: Theme.of(context)
               .textTheme
-              .headlineLarge!
+              .titleLarge!
               .copyWith(color: AppColors.light().gold),
         ),
         const SizedBox(height: 25),

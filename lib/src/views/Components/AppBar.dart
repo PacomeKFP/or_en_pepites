@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:or_en_pepite/src/core/configs/configs.dart';
 
-PreferredSizeWidget appBarComponent(context, name) => AppBar(
+PreferredSizeWidget appBarComponent(context, name, {leading=true}) => AppBar(
       actions: [
         Builder(
           builder: (context) => IconButton(
