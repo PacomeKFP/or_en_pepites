@@ -87,12 +87,15 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
     return TextButton(
       onPressed: () {
         setState(() {
-          authType = authType == AuthType.login
+          authType = authType != AuthType.resetPassword
               ? AuthType.resetPassword
               : AuthType.login;
         });
       },
-      child: Text(authType == AuthType.resetPassword ?"Me Connecter " :AuthType.resetPassword.attachedText,
+      child: Text(
+          authType != AuthType.resetPassword
+              ? "J'ai oublié mon mot de passe "
+              : "Me connecter" ,
           style:
               GoogleFonts.roboto(fontSize: 16, color: AppColors.light().gold)),
     );

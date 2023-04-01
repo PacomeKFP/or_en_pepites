@@ -9,7 +9,7 @@ enum AuthType {
   String get label => this == login
       ? 'Se Connecter'
       : this == resetPassword
-          ? "Reinitialiser mon mot de passe"
+          ? "Reinitialisation"
           : "S'inscrire";
 
   String get attachedText => this == login
